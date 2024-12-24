@@ -1,7 +1,8 @@
 import { AppBar, Toolbar, Typography, Button, IconButton } from '@mui/material'
 import { Link, useNavigate } from 'react-router-dom'
 
-const Navbar = ({}) => {
+const Navbar = ({ isAuthenticated, user }) => {
+   const handleLogout = () => {}
    return (
       <AppBar position="static" style={{ backgroundColor: '#fff' }}>
          <Toolbar>

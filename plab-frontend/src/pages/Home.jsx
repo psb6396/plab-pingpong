@@ -1,15 +1,12 @@
 import { Container, Typography, Pagination, Stack, styled } from '@mui/material'
 
-const ImageWrap = styled.div`
-   margin: 0 auto;
-`
-
 const Home = ({ isAuthenticated = {}, user = {} }) => {
+   //생성된 예약 전체 fetch 할 예정 ㅇㅇㅇ
    return (
       <Container maxWidth="xs">
-         <ImageWrap>
+         <div>
             <img src="./images/pingpong.jpg" alt="pingpong" />
-         </ImageWrap>
+         </div>
       </Container>
    )
 }
