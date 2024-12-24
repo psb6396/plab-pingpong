@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import Navbar from './components/Navbar'
 import LoginPage from './pages/LoginPage'
+import SignupPage from './pages/SignupPage'
 
 function App() {
    //  const dispatch = useDispatch()
@@ -19,6 +20,7 @@ function App() {
          <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignupPage />} />
          </Routes>
       </>
    )

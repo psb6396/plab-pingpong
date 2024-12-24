@@ -50,7 +50,7 @@ const Login = () => {
 
                {/* 로그인 버튼 */}
                <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: '20px' }}>
-                  <p>
+                  <p style={{ marginTop: '8px', marginRight: '10px' }}>
                      계정이 없으신가요? <Link to="/signup">회원가입</Link>
                   </p>
                   <Button variant="contained" color="primary" type="submit" disabled={loading} sx={{ position: 'relative' }}>
