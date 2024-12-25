@@ -22,6 +22,19 @@ sequelize
       console.error(err)
    })
 
+app.use(
+   cors({
+      origin: 'http://localhost:3000',
+      credentials:true,
+   })
+)
+
+app.use(morgan('dev')) // HTTP 요청 로깅 (dev 모드)
+app.use(express.static(path.join(__dirname, 'uploads'))) // 정적 파일 제공
+app.use(express.json()) // JSON 데이터 파싱
+app.use(express.urlencoded({ extended: false })) // URL-encoded 데이터 파싱
+app.use(cookieParser(process.env.COOKIE_SECRET)) //쿠키설정
+
 // http://localhost:8000/ 으로 접속시 보여줄 내용
 app.get('/', (req, res) => {
    res.send('Hello, Express!')
