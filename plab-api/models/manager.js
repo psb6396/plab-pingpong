@@ -1,19 +1,20 @@
 const Sequelize = require('sequelize')
 
-module.exports = class Game extends Sequelize.Model {
+module.exports = class Manager extends Sequelize.Model {
    static init(sequelize) {
       return super.init(
          {
-            datetime: {
-               type: Sequelize.DATE,
+            email: {
+               type: Sequelize.STRING(40),
+               allowNull: false,
+               unique: true,
+            },
+            nick: {
+               type: Sequelize.STRING(15),
                allowNull: false,
             },
-            maximum_people: {
-               type: Sequelize.INTEGER,
-               allowNull: false,
-            },
-            minimum_people: {
-               type: Sequelize.INTEGER,
+            password: {
+               type: Sequelize.STRING(100),
                allowNull: false,
             },
          },
@@ -21,8 +22,8 @@ module.exports = class Game extends Sequelize.Model {
             sequelize,
             timestamps: true, //createdAt과 updatedAt ..등 자동 생성
             underscored: false,
-            modelName: 'Game',
-            tableName: 'games',
+            modelName: 'Manager',
+            tableName: 'managers',
             paranoid: true,
             charset: 'utf8mb4',
             collate: 'utf8mb4_general_ci',
@@ -30,6 +31,6 @@ module.exports = class Game extends Sequelize.Model {
       )
    }
    static associate(db) {
-      db.Game.belongsToMany(db.User, { through: 'Reservation' })
+      db.Manager.hasMany(db.Game)
    }
 }
