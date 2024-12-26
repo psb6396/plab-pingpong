@@ -83,4 +83,46 @@ router.post('/login', isNotLoggedIn, async (req, res, next) => {
    })(req, res, next)
 })
 
+//로그아웃 localhost:8000/auth/logout
+router.get('/logout', isLoggedIn, async (req, res, next) => {
+   // 사용자를 로그아웃 상태로 바꿈
+   req.logout((err) => {
+      if (err) {
+         //로그아웃 상태로 바꾸는중 에러가 났을 때
+         console.log(err)
+         return res.status(500).json({
+            success: false,
+            message: '로그아웃 중 오류가 발생했습니다.',
+            error: err,
+         })
+      }
+      //로그아웃 성공시 세션에 저장되어 있던 사용자 id를 삭제해주고 아래와 같은 결과를 response
+      //status code를 주지 않으면 기본값은 200
+      res.json({
+         success: true,
+         message: '로그아웃에 성공했습니다.',
+      })
+   })
+})
+
+//로그인 상태 확인 localhost:8000/auth/status
+router.get('/status', async (req, res, next) => {
+   if (req.isAuthenticated()) {
+      //로그인이 된 상태
+      // req.user는 passport의 역직렬화 설정에 의해 로그인되었을때 가져올 수 있다
+      res.json({
+         isAuthenticated: true,
+         user: {
+            id: req.user.id,
+            nick: req.user.nick,
+         },
+      })
+   } else {
+      //로그인이 되지 않았을 때
+      res.json({
+         isAuthenticated: false,
+      })
+   }
+})
+
 module.exports = router

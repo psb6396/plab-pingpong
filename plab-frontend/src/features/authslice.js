@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { registerUser, loginUser } from '../api/plabApi'
+import { registerUser, loginUser, checkAuthStatus, logoutUser } from '../api/plabApi'
 
 // 회원가입 thunk
 export const registerUserThunk = createAsyncThunk('auth/registerUser', async (userData, { rejectWithValue }) => {
@@ -11,6 +11,7 @@ export const registerUserThunk = createAsyncThunk('auth/registerUser', async (us
    }
 })
 
+// 로그인 thunk
 export const loginUserThunk = createAsyncThunk('auth/loginUser', async (Credentials, { rejectWithValue }) => {
    try {
       // console.log(Credentials)
@@ -19,6 +20,26 @@ export const loginUserThunk = createAsyncThunk('auth/loginUser', async (Credenti
    } catch (error) {
       console.log('asdf')
       return rejectWithValue(error.response?.data?.message || '로그인 실패')
+   }
+})
+
+// 로그아웃 thunk , _(언더바)는 매개변수 값이 없을 떄 사용
+export const logoutUserThunk = createAsyncThunk('auth/logoutUser', async (_, { rejectWithValue }) => {
+   try {
+      const response = await logoutUser()
+      return response.data
+   } catch (error) {
+      return rejectWithValue(error.response?.data?.message || '로그아웃 실패')
+   }
+})
+
+// 로그인 상태확인 thunk
+export const checkAuthStatusThunk = createAsyncThunk('auth/checkAuthStatus', async (_, { rejectWithValue }) => {
+   try {
+      const response = await checkAuthStatus()
+      return response.data
+   } catch (error) {
+      return rejectWithValue(error.response?.data?.message || '상태확인 실패')
    }
 })
 
@@ -61,6 +82,38 @@ const authSlice = createSlice({
             state.user = action.payload
          })
          .addCase(loginUserThunk.rejected, (state, action) => {
+            state.loading = true
+            state.error = action.payload
+         })
+      //로그인상태확인
+      builder
+         .addCase(checkAuthStatusThunk.pending, (state) => {
+            state.loading = true
+            state.error = null
+         })
+         .addCase(checkAuthStatusThunk.fulfilled, (state, action) => {
+            state.loading = false
+            state.isAuthenticated = action.payload.isAuthenticated
+            state.user = action.payload.user || null
+         })
+         .addCase(checkAuthStatusThunk.rejected, (state, action) => {
+            state.loading = true
+            state.error = action.payload
+            state.isAuthenticated = false
+            state.user = null
+         })
+      //로그아웃
+      builder
+         .addCase(logoutUserThunk.pending, (state) => {
+            state.loading = true
+            state.error = null
+         })
+         .addCase(logoutUserThunk.fulfilled, (state, action) => {
+            state.loading = false
+            state.isAuthenticated = false
+            state.user = null //로그아웃 후 유저정보 초기화
+         })
+         .addCase(logoutUserThunk.rejected, (state, action) => {
             state.loading = true
             state.error = action.payload
          })

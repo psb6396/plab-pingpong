@@ -17,7 +17,7 @@ const app = express()
 
 passportConfig() //passport 실행
 
-app.set('port', process.env.PORT || 3001)
+app.set('port', process.env.PORT || 8000)
 
 //시퀄라이즈를 사용한 DB연결
 sequelize
@@ -32,7 +32,7 @@ sequelize
 //미들웨어 설정
 app.use(
    cors({
-      origin: 'http://localhost:3001',
+      origin: 'http://localhost:3000',
       credentials: true,
    })
 )

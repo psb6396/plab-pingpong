@@ -34,3 +34,25 @@ export const loginUser = async (credentials) => {
       throw error
    }
 }
+
+//로그인 상태확인
+export const checkAuthStatus = async () => {
+   try {
+      const response = await plabApi.get('/auth/status')
+      return response
+   } catch (error) {
+      console.error(`API Request 오류: ${error.message}`)
+      throw error
+   }
+}
+
+//로그아웃
+export const logoutUser = async () => {
+   try {
+      const response = await plabApi.get('/auth/logout')
+      return response
+   } catch (error) {
+      console.error(`API request 오류: ${error.message}`)
+      throw error
+   }
+}

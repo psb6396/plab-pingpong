@@ -6,17 +6,18 @@ import { useEffect } from 'react'
 import Navbar from './components/Navbar'
 import LoginPage from './pages/LoginPage'
 import SignupPage from './pages/SignupPage'
+import { checkAuthStatusThunk } from './features/authslice'
 
 function App() {
-   //  const dispatch = useDispatch()
-   //  const { isAuthenticated, user } = useSelector((state) => state.auth)
+   const dispatch = useDispatch()
+   const { isAuthenticated, user } = useSelector((state) => state.auth)
 
-   //  useEffect(() => {
-   //     dispatch()
-   //  }, [dispatch])
+   useEffect(() => {
+      dispatch(checkAuthStatusThunk())
+   }, [dispatch])
    return (
       <>
-         <Navbar isAuthenticated={null} user={null} />
+         <Navbar isAuthenticated={isAuthenticated} user={user} />
          <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<LoginPage />} />
