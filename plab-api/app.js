@@ -8,6 +8,8 @@ const cors = require('cors') // cors 미들웨어 -> api 서버는 반드시 설
 const passport = require('passport')
 
 //라우터 및 기타 모듈 불러오기
+const indexRouter = require('./routes/index')
+const authRouter = require('./routes/auth')
 const { sequelize } = require('./models/index')
 const passportConfig = require('./passport/index')
 
@@ -15,7 +17,7 @@ const app = express()
 
 passportConfig() //passport 실행
 
-app.set('port', process.env.PORT || 8000)
+app.set('port', process.env.PORT || 3001)
 
 //시퀄라이즈를 사용한 DB연결
 sequelize
@@ -30,7 +32,7 @@ sequelize
 //미들웨어 설정
 app.use(
    cors({
-      origin: 'http://localhost:3000',
+      origin: 'http://localhost:3001',
       credentials: true,
    })
 )
@@ -55,6 +57,10 @@ app.use(
 //passport 초기화, 세션연동
 app.use(passport.initialize()) //초기화
 app.use(passport.session()) //passport와 생성해둔 세션 연결
+
+//라우터 등록
+app.use('/', indexRouter)
+app.use('/auth', authRouter)
 
 //잘못된 라우터 경로 처리
 app.use((req, res, next) => {

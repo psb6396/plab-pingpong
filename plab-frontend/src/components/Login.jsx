@@ -2,11 +2,20 @@ import { TextField, Button, Container, Typography, CircularProgress } from '@mui
 import React, { useState, useMemo, useCallback } from 'react'
 import Box from '@mui/material/Box'
 import { Link, useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 
 const Login = () => {
    const [email, setEmail] = useState('') // 이메일 상태
    const [password, setPassword] = useState('') // 비밀번호 상태
    const loading = false
+   const dispatch = useDispatch()
+   const navigate = useNavigate()
+   const handleLogin = useCallback((e) => {
+      e.preventDefault()
+      if (email.trim() && password.trim()) {
+         dispatch()
+      }
+   })
    return (
       <Container maxWidth="sm" sx={{ marginTop: '80px' }}>
          <Box
@@ -16,7 +25,7 @@ const Login = () => {
                borderRadius: '8px',
             }}
          >
-            <form>
+            <form onSubmit={handleLogin}>
                {/* 첫 번째 텍스트 필드 (이메일) */}
                <TextField
                   sx={{
