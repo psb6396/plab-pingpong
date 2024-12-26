@@ -7,6 +7,7 @@ import Navbar from './components/Navbar'
 import LoginPage from './pages/LoginPage'
 import SignupPage from './pages/SignupPage'
 import { checkAuthStatusThunk } from './features/authslice'
+import ProfilePage from './pages/ProfilePage'
 
 function App() {
    const dispatch = useDispatch()
@@ -22,6 +23,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignupPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
          </Routes>
       </>
    )
