@@ -3,6 +3,7 @@ import React, { useState, useMemo, useCallback } from 'react'
 import Box from '@mui/material/Box'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
+import { loginUserThunk } from '../features/authslice'
 
 const Login = () => {
    const [email, setEmail] = useState('') // 이메일 상태
@@ -13,7 +14,10 @@ const Login = () => {
    const handleLogin = useCallback((e) => {
       e.preventDefault()
       if (email.trim() && password.trim()) {
-         dispatch()
+         dispatch(loginUserThunk({ email, password }))
+            .unwrap()
+            .then(() => navigate('/'))
+            .catch((error) => console.error('로그인실패:', error))
       }
    })
    return (

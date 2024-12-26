@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { registerUser } from '../api/plabApi'
+import { registerUser, loginUser } from '../api/plabApi'
 
 // 회원가입 thunk
 export const registerUserThunk = createAsyncThunk('auth/registerUser', async (userData, { rejectWithValue }) => {
@@ -8,6 +8,17 @@ export const registerUserThunk = createAsyncThunk('auth/registerUser', async (us
       return response.data.user
    } catch (error) {
       return rejectWithValue(error.response?.data?.message || '회원가입실패')
+   }
+})
+
+export const loginUserThunk = createAsyncThunk('auth/loginUser', async (Credentials, { rejectWithValue }) => {
+   try {
+      // console.log(Credentials)
+      const response = await loginUser(Credentials)
+      return response.data.user
+   } catch (error) {
+      console.log('asdf')
+      return rejectWithValue(error.response?.data?.message || '로그인 실패')
    }
 })
 
@@ -36,6 +47,21 @@ const authSlice = createSlice({
          })
          .addCase(registerUserThunk.rejected, (state, action) => {
             state.loading = false
+            state.error = action.payload
+         })
+      //로그인
+      builder
+         .addCase(loginUserThunk.pending, (state) => {
+            state.loading = true
+            state.error = null
+         })
+         .addCase(loginUserThunk.fulfilled, (state, action) => {
+            state.loading = false
+            state.isAuthenticated = true
+            state.user = action.payload
+         })
+         .addCase(loginUserThunk.rejected, (state, action) => {
+            state.loading = true
             state.error = action.payload
          })
    },
