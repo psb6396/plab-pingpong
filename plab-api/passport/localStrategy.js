@@ -4,6 +4,8 @@ const bcrypt = require('bcrypt')
 const User = require('../models/user')
 
 // 로그인 시 사용자 정보를 DB에서 조회하고 사용자 존재 여부와 비밀번호를 비교 -> passport에 결과를 전달
+
+// 11:58분부터 내가 만든 커스텀 코드
 module.exports = () => {
    passport.use(
       new LocalStrategy(
