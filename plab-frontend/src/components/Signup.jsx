@@ -3,6 +3,10 @@ import { useCallback } from 'react'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { registerUserThunk } from '../features/authslice'
+import FormControl from '@mui/joy/FormControl'
+import FormLabel from '@mui/joy/FormLabel'
+import Radio from '@mui/joy/Radio'
+import RadioGroup from '@mui/joy/RadioGroup'
 const Signup = () => {
    const [email, setEmail] = useState('')
    const [nick, setNick] = useState('')
@@ -73,6 +77,16 @@ const Signup = () => {
          <TextField label="비밀번호" variant="outlined" type="password" fullWidth margin="normal" value={password} onChange={(e) => setPassword(e.target.value)} />
 
          <TextField label="비밀번호 확인" variant="outlined" type="password" fullWidth margin="normal" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+
+         <FormControl>
+            <FormLabel>Variants</FormLabel>
+            <RadioGroup defaultValue="outlined" name="radio-buttons-group">
+               <Radio value="outlined" label="Outlined" variant="outlined" />
+               <Radio value="soft" label="Soft" variant="soft" />
+               <Radio value="solid" label="Solid" variant="solid" />
+               <Radio value="plain" label="Plain" variant="plain" />
+            </RadioGroup>
+         </FormControl>
 
          <Button variant="contained" color="primary" onClick={handleSignup} fullWidth disabled={loading} style={{ marginTop: '20px' }}>
             {loading ? <CircularProgress size={24} /> : '회원가입'}
