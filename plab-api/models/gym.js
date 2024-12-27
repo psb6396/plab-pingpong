@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize')
 
-module.exports = class Manager extends Sequelize.Model {
+module.exports = class Gym extends Sequelize.Model {
    static init(sequelize) {
       return super.init(
          {
@@ -22,6 +22,6 @@ module.exports = class Manager extends Sequelize.Model {
       )
    }
    static associate(db) {
-      db.Manager.hasMany(db.Game)
+      db.Gym.hasMany(db.Game)
    }
 }

@@ -17,11 +17,11 @@ module.exports = class User extends Sequelize.Model {
                type: Sequelize.STRING(100),
                allowNull: false,
             },
-            // isActive: {
-            //    type: DataTypes.BOOLEAN, // Sequelize BOOLEAN is mapped to TINYINT(1) in MySQL
-            //    defaultValue: true, // Default value if not provided
-            //    allowNull: false,
-            // },
+            role: {
+               type: Sequelize.ENUM('PLAYER', 'MANAGER'),
+               allowNull: false,
+               defaultValue: 'PLAYER', // Default role
+            },
          },
          {
             sequelize,
