@@ -32,5 +32,6 @@ module.exports = class Game extends Sequelize.Model {
    static associate(db) {
       db.Game.belongsToMany(db.User, { through: 'Reservation' })
       db.Game.belongsTo(db.Manager)
+      db.Game.belongsTo(db.Gym)
    }
 }
