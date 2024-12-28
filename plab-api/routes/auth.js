@@ -22,11 +22,21 @@ router.post("/join", isNotLoggedIn, async (req, res, next) => {
     const hash = await bcrypt.hash(password, 12) // 12: salt(해시 암호화를 진행시 추가되는 임의의 데이터로 10~12 정도의 값이 권장)
 
     //새로운 사용자 생성
-    const newUser = await User.create({
-      email: email,
-      nick: nick,
-      password: hash,
-    })
+    if (managerChecked === true) {
+      const newUser = await User.create({
+        email: email,
+        nick: nick,
+        password: hash,
+        role: "MANAGER",
+      })
+    } else if (managerChecked === false) {
+      const newUser = await User.create({
+        email: email,
+        nick: nick,
+        password: hash,
+        role: "PLAYER",
+      })
+    }
     //성공 응답 반환
     res.status(201).json({
       success: true,
@@ -52,13 +62,11 @@ router.post("/login", isNotLoggedIn, async (req, res, next) => {
   passport.authenticate("local", (authError, user, info) => {
     if (authError) {
       //로그인 인증 중 에러 발생시
-      return res
-        .status(500)
-        .json({
-          success: false,
-          message: "인증 중 오류 발생",
-          error: authError,
-        })
+      return res.status(500).json({
+        success: false,
+        message: "인증 중 오류 발생",
+        error: authError,
+      })
     }
     if (!user) {
       //비밀번호 불일치 또는 사용자가 없을 경우 info.message를 사용해서 메세지 전달
@@ -72,13 +80,11 @@ router.post("/login", isNotLoggedIn, async (req, res, next) => {
     req.login(user, (loginError) => {
       if (loginError) {
         // 로그인 상태로 바꾸는 중 오류 발생시
-        return res
-          .status(500)
-          .json({
-            success: false,
-            message: "로그인 중 오류 발생",
-            error: loginError,
-          })
+        return res.status(500).json({
+          success: false,
+          message: "로그인 중 오류 발생",
+          error: loginError,
+        })
       }
 
       //로그인 성공시
