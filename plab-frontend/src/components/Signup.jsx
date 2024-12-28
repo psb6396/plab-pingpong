@@ -36,7 +36,7 @@ const Signup = () => {
       alert("비밀번호가 일치하지 않습니다!")
       return
     }
-    dispatch(registerUserThunk({ email, nick, password }))
+    dispatch(registerUserThunk({ email, nick, password, managerChecked }))
       .unwrap()
       .then(() => {
         //회원가입 성공시
