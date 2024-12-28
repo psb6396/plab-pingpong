@@ -10,8 +10,6 @@ import { useCallback } from "react"
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { registerUserThunk } from "../features/authslice"
-import FormControl from "@mui/joy/FormControl"
-import FormLabel from "@mui/joy/FormLabel"
 import Checkbox from "@mui/material/Checkbox"
 
 const Signup = () => {
