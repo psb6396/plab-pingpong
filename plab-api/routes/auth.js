@@ -20,17 +20,17 @@ router.post("/join", isNotLoggedIn, async (req, res, next) => {
     }
     //이메일 중복 확인을 통과시 새로운 사용자 계정 생성
     const hash = await bcrypt.hash(password, 12) // 12: salt(해시 암호화를 진행시 추가되는 임의의 데이터로 10~12 정도의 값이 권장)
-
+    let newUser
     //새로운 사용자 생성
     if (managerChecked === true) {
-      const newUser = await User.create({
+      newUser = await User.create({
         email: email,
         nick: nick,
         password: hash,
         role: "MANAGER",
       })
     } else if (managerChecked === false) {
-      const newUser = await User.create({
+      newUser = await User.create({
         email: email,
         nick: nick,
         password: hash,
@@ -45,6 +45,7 @@ router.post("/join", isNotLoggedIn, async (req, res, next) => {
         id: newUser.id,
         email: newUser.email,
         nick: newUser.nick,
+        role: newUser.role,
       },
     })
   } catch (error) {
