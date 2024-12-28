@@ -4,6 +4,7 @@ import {
   Container,
   Typography,
   CircularProgress,
+  FormControlLabel,
 } from "@mui/material"
 import { useCallback } from "react"
 import { useState } from "react"
@@ -124,12 +125,15 @@ const Signup = () => {
         onChange={(e) => setConfirmPassword(e.target.value)}
       />
 
-      <FormControl>
-        <Checkbox
-          checked={managerChecked}
-          onChange={(e) => setManagerChecked(e.target.checked)}
-        />
-      </FormControl>
+      <FormControlLabel
+        label="<= 매니저 지원 버튼"
+        control={
+          <Checkbox
+            checked={managerChecked}
+            onChange={(e) => setManagerChecked(e.target.checked)}
+          />
+        }
+      />
 
       <Button
         variant="contained"
