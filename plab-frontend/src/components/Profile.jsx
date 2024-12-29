@@ -12,6 +12,7 @@ import Grid from "@mui/material/Grid2"
 const Profile = () => {
   return (
     <div>
+      {/* fetch부터 해서 사람정보 가져오기 */}
       {/* Profile Section */}
       <Grid container spacing={2} style={{ marginTop: 20, padding: "0 20px" }}>
         <Grid item xs={12} sm={4} style={{ textAlign: "center" }}>
@@ -19,7 +20,7 @@ const Profile = () => {
           <Typography variant="h6" style={{ marginTop: 10 }}>
             이름: 박세빈
           </Typography>
-          <Typography variant="body1">나이: 26</Typography>
+          {/* <Typography variant="body1">나이: 26</Typography> */}
         </Grid>
       </Grid>
 
