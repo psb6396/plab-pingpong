@@ -6,6 +6,7 @@ import {
   Card,
   CardContent,
   Divider,
+  IconButton,
 } from '@mui/material'
 import Grid from '@mui/material/Grid2'
 import { useDispatch, useSelector } from 'react-redux'
@@ -54,9 +55,22 @@ const Profile = () => {
           {/* Application List */}
           <Card style={{ margin: '20px', padding: '10px' }}>
             <CardContent>
-              <Typography variant='h6' style={{ marginBottom: 10 }}>
-                신청내역
-              </Typography>
+              {user.role === 'MANAGER' ? (
+                <Typography variant='h6' style={{ marginBottom: 10 }}>
+                  생성내역
+                </Typography>
+              ) : (
+                <Typography variant='h6' style={{ marginBottom: 10 }}>
+                  신청내역
+                </Typography>
+              )}
+              {user.role === 'MANAGER' ? (
+                <IconButton color='primary' aria-label='add' size='large'>
+                  <AddCircleOutlineIcon fontSize='inherit' />
+                </IconButton>
+              ) : (
+                <h1>리액트가 아닙니다</h1>
+              )}
               <Divider />
 
               {/* Application 1 */}
