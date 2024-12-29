@@ -61,6 +61,7 @@ export const logoutUser = async () => {
 export const getProfile = async () => {
   try {
     const response = await plabApi.get(`/page/profile`)
+    console.log('asdf')
     return response
   } catch (error) {
     console.error(`API Request 오류: ${error.message}`)
