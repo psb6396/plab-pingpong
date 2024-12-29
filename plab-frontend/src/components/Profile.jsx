@@ -28,7 +28,7 @@ const Profile = () => {
 
   useEffect(() => {
     fetchProfileData()
-  }, fetchProfileData)
+  }, [fetchProfileData])
   return (
     <div>
       {/* fetch부터 해서 사람정보 가져오기 */}
