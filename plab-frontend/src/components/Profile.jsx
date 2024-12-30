@@ -11,7 +11,7 @@ import {
 import Grid from '@mui/material/Grid2'
 import { useDispatch, useSelector } from 'react-redux'
 import { useCallback, useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { getProfileThunk } from '../features/pageSlice'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 
@@ -65,11 +65,13 @@ const Profile = () => {
                 </Typography>
               )}
               {user.role === 'MANAGER' ? (
-                <IconButton color='primary' aria-label='add' size='large'>
-                  <AddCircleOutlineIcon fontSize='inherit' />
-                </IconButton>
+                <Link to='/'>
+                  <IconButton color='primary' aria-label='add' size='large'>
+                    <AddCircleOutlineIcon fontSize='inherit' />
+                  </IconButton>
+                </Link>
               ) : (
-                <h1>리액트가 아닙니다</h1>
+                <></>
               )}
               <Divider />
 
