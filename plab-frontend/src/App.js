@@ -8,7 +8,7 @@ import LoginPage from './pages/LoginPage'
 import SignupPage from './pages/SignupPage'
 import { checkAuthStatusThunk } from './features/authslice'
 import ProfilePage from './pages/ProfilePage'
-import MatchCreatePage from './pages/MatchCreatePage'
+import GameCreatePage from './pages/GameCreatePage'
 
 function App() {
   const dispatch = useDispatch()
@@ -25,7 +25,7 @@ function App() {
         <Route path='/login' element={<LoginPage />} />
         <Route path='/signup' element={<SignupPage />} />
         <Route path='/profile' element={<ProfilePage />} />
-        <Route path='/matchcreate' element={<MatchCreatePage />} />
+        <Route path='/gamecreate' element={<GameCreatePage />} />
       </Routes>
     </>
   )

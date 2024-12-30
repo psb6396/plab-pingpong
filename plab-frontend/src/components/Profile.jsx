@@ -65,7 +65,7 @@ const Profile = () => {
                 </Typography>
               )}
               {user.role === 'MANAGER' ? (
-                <Link to='/'>
+                <Link to='/gamecreate'>
                   <IconButton color='primary' aria-label='add' size='large'>
                     <AddCircleOutlineIcon fontSize='inherit' />
                   </IconButton>
