@@ -10,9 +10,12 @@ import {
   FormControl,
 } from '@mui/material'
 import Grid from '@mui/material/Grid2'
+import { LocalizationProvider, DateTimePicker } from '@mui/x-date-pickers'
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 
 const GameForm = () => {
   const handleChange = () => {}
+  const [selectedDate, setSelectedDate] = React.useState(new Date())
   let age
   return (
     <div>
@@ -48,13 +51,16 @@ const GameForm = () => {
                 </FormControl>
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  label='날짜 및 시간'
-                  variant='outlined'
-                  type='datetime-local'
-                  InputLabelProps={{ shrink: true }}
-                />
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  <DateTimePicker
+                    label='날짜 및 시간'
+                    value={selectedDate}
+                    onChange={(newValue) => setSelectedDate(newValue)}
+                    renderInput={(params) => (
+                      <TextField fullWidth {...params} />
+                    )}
+                  />
+                </LocalizationProvider>
               </Grid>
               <Grid item xs={12}>
                 <TextField
