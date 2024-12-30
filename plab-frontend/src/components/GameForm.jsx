@@ -1,15 +1,19 @@
 import React from 'react'
 import {
-  AppBar,
-  Toolbar,
   Typography,
   Button,
   TextField,
   Paper,
+  MenuItem,
+  Select,
+  InputLabel,
+  FormControl,
 } from '@mui/material'
 import Grid from '@mui/material/Grid2'
 
 const GameForm = () => {
+  const handleChange = () => {}
+  let age
   return (
     <div>
       {/* Match Creation Form */}
@@ -24,17 +28,24 @@ const GameForm = () => {
         >
           <form>
             <Typography variant='h6' style={{ marginBottom: 20 }}>
-              매치 생성
+              게임매치 생성
             </Typography>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} direction='column'>
               <Grid item xs={12}>
-                <TextField fullWidth label='체육관' variant='outlined' />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField fullWidth label='지역' variant='outlined' />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField fullWidth label='세부주소' variant='outlined' />
+                <FormControl fullWidth variant='outlined'>
+                  <InputLabel>체육관</InputLabel>
+                  <Select
+                    labelId='demo-simple-select-label'
+                    id='demo-simple-select'
+                    value={age}
+                    label='체육관'
+                    onChange={handleChange}
+                  >
+                    <MenuItem value={10}>Ten</MenuItem>
+                    <MenuItem value={20}>Twenty</MenuItem>
+                    <MenuItem value={30}>Thirty</MenuItem>
+                  </Select>
+                </FormControl>
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -51,6 +62,11 @@ const GameForm = () => {
                   label='최대 인원'
                   variant='outlined'
                   type='number'
+                  InputProps={{
+                    inputProps: {
+                      min: 1,
+                    },
+                  }}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -59,6 +75,11 @@ const GameForm = () => {
                   label='최소 인원'
                   variant='outlined'
                   type='number'
+                  InputProps={{
+                    inputProps: {
+                      min: 1,
+                    },
+                  }}
                 />
               </Grid>
               <Grid item xs={12}>
