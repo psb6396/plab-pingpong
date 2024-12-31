@@ -1,6 +1,7 @@
 import GameForm from '../components/GameForm'
 import { useDispatch } from 'react-redux'
 import { useCallback } from 'react'
+import { createGameThunk } from '../features/gameSlice'
 const GameCreatePage = () => {
   const dispatch = useDispatch()
   const handleSubmit = useCallback(
@@ -13,10 +14,10 @@ const GameCreatePage = () => {
           img: 파일객체,
       }
       */
-      dispatch(createPostThunk(gamedata))
+      dispatch(createGameThunk(gamedata))
         .unwrap()
         .then(() => {
-          window.location.href = '/' //페이지 이동 -> 전체 페이지 새로고침
+          window.location.href = '/profile' //페이지 이동 -> 전체 페이지 새로고침
         })
         .catch((error) => {
           console.error('게임매치 등록 에러:', error)

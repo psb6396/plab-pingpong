@@ -68,3 +68,14 @@ export const getProfile = async () => {
     throw error
   }
 }
+
+//게임매칭 등록
+export const createGame = async (gameData) => {
+  try {
+    const response = await plabApi.post('/game', gameData)
+    return response
+  } catch (error) {
+    console.error(`API Request 오류: ${error.message}`)
+    throw error
+  }
+}
