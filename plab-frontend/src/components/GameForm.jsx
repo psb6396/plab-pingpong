@@ -12,11 +12,53 @@ import {
 import Grid from '@mui/material/Grid2'
 import { useState, useCallback, useMemo } from 'react'
 
-const GameForm = () => {
-  const [selectedDate, setSelectedDate] = React.useState(() => {
+const GameForm = ({ onSubmit }) => {
+  const [selectedGym, setSelectedGym] = useState(null)
+  const [selectedDate, setSelectedDate] = useState(() => {
     const today = new Date()
     return new Date(today.getFullYear(), today.getMonth(), today.getDate())
   })
+  const [selectedTime, setSelectedTime] = useState(null)
+  const [maximumPeople, setMaximumPeople] = useState(null)
+  const [minimumPeople, setMinimumPeople] = useState(null)
+
+  const handleSubmit = useCallback((e) => {
+    e.preventDefault()
+
+    if (!selectedGym) {
+      alert('체육관을 입력하세요.')
+      return
+    }
+
+    if (!selectedDate) {
+      alert('날짜를 입력하세요.')
+      return
+    }
+
+    if (!selectedTime) {
+      alert('시간을 입력하세요.')
+      return
+    }
+
+    if (!maximumPeople) {
+      alert('최대인원을 입력하세요.')
+      return
+    }
+
+    if (!minimumPeople) {
+      alert('최소인원을 입력하세요.')
+      return
+    }
+
+    onSubmit({
+      selectedGym,
+      selectedDate,
+      selectedTime,
+      maximumPeople,
+      minimumPeople,
+    })
+  })
+
   let age
   return (
     <div>
@@ -41,13 +83,11 @@ const GameForm = () => {
                   <Select
                     labelId='demo-simple-select-label'
                     id='demo-simple-select'
-                    value={age}
+                    value={selectedGym}
                     label='체육관'
-                    onChange={handleChange}
+                    onChange={(e) => setSelectedGym(e.target.value)}
                   >
                     <MenuItem value={10}>Ten</MenuItem>
-                    <MenuItem value={20}>Twenty</MenuItem>
-                    <MenuItem value={30}>Thirty</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
@@ -63,13 +103,13 @@ const GameForm = () => {
               </Grid>
               <Grid item xs={12}>
                 <FormControl fullWidth>
-                  <InputLabel id='demo-simple-select-label'>Age</InputLabel>
+                  <InputLabel id='demo-simple-select-label'>시간</InputLabel>
                   <Select
                     labelId='demo-simple-select-label'
                     id='demo-simple-select'
-                    value={age}
-                    label='Age'
-                    onChange={handleChange}
+                    value={selectedTime}
+                    label='time'
+                    onChange={(e) => setSelectedTime(e.target.value)}
                   >
                     {Array.from({ length: 23 }, (_, i) => i + 1).map((hour) => (
                       <MenuItem value={hour}>
@@ -85,6 +125,8 @@ const GameForm = () => {
                   label='최대 인원'
                   variant='outlined'
                   type='number'
+                  value={maximumPeople}
+                  onChange={(e) => setMaximumPeople(e.target.value)}
                   InputProps={{
                     inputProps: {
                       min: 1,
@@ -98,6 +140,8 @@ const GameForm = () => {
                   label='최소 인원'
                   variant='outlined'
                   type='number'
+                  value={minimumPeople}
+                  onChange={(e) => setMinimumPeople(e.target.value)}
                   InputProps={{
                     inputProps: {
                       min: 1,
@@ -106,7 +150,12 @@ const GameForm = () => {
                 />
               </Grid>
               <Grid item xs={12}>
-                <Button fullWidth variant='contained' color='primary'>
+                <Button
+                  onClick={handleSubmit}
+                  fullWidth
+                  variant='contained'
+                  color='primary'
+                >
                   매치 생성
                 </Button>
               </Grid>
