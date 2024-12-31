@@ -10,12 +10,13 @@ import {
   FormControl,
 } from '@mui/material'
 import Grid from '@mui/material/Grid2'
-import { LocalizationProvider, DateTimePicker } from '@mui/x-date-pickers'
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
+import { useState, useCallback, useMemo } from 'react'
 
 const GameForm = () => {
-  const handleChange = () => {}
-  const [selectedDate, setSelectedDate] = React.useState(new Date())
+  const [selectedDate, setSelectedDate] = React.useState(() => {
+    const today = new Date()
+    return new Date(today.getFullYear(), today.getMonth(), today.getDate())
+  })
   let age
   return (
     <div>
@@ -51,16 +52,32 @@ const GameForm = () => {
                 </FormControl>
               </Grid>
               <Grid item xs={12}>
-                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                  <DateTimePicker
-                    label='날짜 및 시간'
-                    value={selectedDate}
-                    onChange={(newValue) => setSelectedDate(newValue)}
-                    renderInput={(params) => (
-                      <TextField fullWidth {...params} />
-                    )}
-                  />
-                </LocalizationProvider>
+                <TextField
+                  fullWidth
+                  label='날짜'
+                  variant='outlined'
+                  type='date'
+                  value={selectedDate.toISOString().substring(0, 10)}
+                  onChange={(e) => setSelectedDate(new Date(e.target.value))}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <FormControl fullWidth>
+                  <InputLabel id='demo-simple-select-label'>Age</InputLabel>
+                  <Select
+                    labelId='demo-simple-select-label'
+                    id='demo-simple-select'
+                    value={age}
+                    label='Age'
+                    onChange={handleChange}
+                  >
+                    {Array.from({ length: 23 }, (_, i) => i + 1).map((hour) => (
+                      <MenuItem value={hour}>
+                        {hour.toString().padStart(2, '0')}:00
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
               </Grid>
               <Grid item xs={12}>
                 <TextField
