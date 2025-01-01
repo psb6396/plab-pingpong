@@ -21,7 +21,7 @@ const GameForm = ({ onSubmit }) => {
     dispatch(fetchGymsThunk())
     console.log(gyms)
   }, [dispatch])
-  const [selectedGym, setSelectedGym] = useState(null)
+  const [selectedGymId, setSelectedGymId] = useState(null)
   const [selectedDate, setSelectedDate] = useState(() => {
     const today = new Date()
     return new Date(today.getFullYear(), today.getMonth(), today.getDate())
@@ -33,7 +33,7 @@ const GameForm = ({ onSubmit }) => {
   const handleSubmit = useCallback((e) => {
     e.preventDefault()
 
-    if (!selectedGym) {
+    if (!selectedGymId) {
       alert('체육관을 입력하세요.')
       return
     }
@@ -59,7 +59,7 @@ const GameForm = ({ onSubmit }) => {
     }
 
     onSubmit({
-      selectedGym,
+      selectedGymId,
       selectedDate,
       selectedTime,
       maximumPeople,
@@ -91,11 +91,13 @@ const GameForm = ({ onSubmit }) => {
                   <Select
                     labelId='demo-simple-select-label'
                     id='demo-simple-select'
-                    value={selectedGym}
+                    value={selectedGymId}
                     label='체육관'
-                    onChange={(e) => setSelectedGym(e.target.value)}
+                    onChange={(e) => setSelectedGymId(e.target.value)}
                   >
-                    <MenuItem value={10}>Ten</MenuItem>
+                    {gyms.map((gym) => (
+                      <MenuItem value={gym.id}>{gym.name}</MenuItem>
+                    ))}
                   </Select>
                 </FormControl>
               </Grid>
