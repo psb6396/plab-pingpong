@@ -161,7 +161,7 @@ const GameForm = ({ onSubmit }) => {
               </Grid>
               <Grid item xs={12}>
                 <Button
-                  onClick={handleSubmit}
+                  onClick={onSubmit}
                   fullWidth
                   variant='contained'
                   color='primary'
