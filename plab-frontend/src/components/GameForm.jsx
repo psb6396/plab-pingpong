@@ -12,11 +12,14 @@ import {
 import Grid from '@mui/material/Grid2'
 import { useState, useCallback, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { fetchGymsThunk } from '../features/gymSlice'
 
 const GameForm = ({ onSubmit }) => {
   const dispatch = useDispatch()
+  const { gyms, loading, error } = useSelector((state) => state.gyms)
   useEffect(() => {
-    dispatch()
+    dispatch(fetchGymsThunk())
+    console.log(gyms)
   }, [dispatch])
   const [selectedGym, setSelectedGym] = useState(null)
   const [selectedDate, setSelectedDate] = useState(() => {
