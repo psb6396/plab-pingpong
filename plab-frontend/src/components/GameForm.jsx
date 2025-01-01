@@ -10,9 +10,14 @@ import {
   FormControl,
 } from '@mui/material'
 import Grid from '@mui/material/Grid2'
-import { useState, useCallback, useMemo } from 'react'
+import { useState, useCallback, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 const GameForm = ({ onSubmit }) => {
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch()
+  }, [dispatch])
   const [selectedGym, setSelectedGym] = useState(null)
   const [selectedDate, setSelectedDate] = useState(() => {
     const today = new Date()

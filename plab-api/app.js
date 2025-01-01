@@ -13,6 +13,7 @@ const authRouter = require('./routes/auth')
 const pageRouter = require('./routes/page')
 const { sequelize } = require('./models/index')
 const passportConfig = require('./passport/index')
+const gymRouter = require('./routes/gym')
 
 const app = express()
 
@@ -63,6 +64,7 @@ app.use(passport.session()) //passport와 생성해둔 세션 연결
 app.use('/', indexRouter)
 app.use('/auth', authRouter)
 app.use('/page', pageRouter)
+app.use('/gym', gymRouter)
 
 //잘못된 라우터 경로 처리
 app.use((req, res, next) => {

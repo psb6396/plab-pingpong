@@ -79,3 +79,14 @@ export const createGame = async (gameData) => {
     throw error
   }
 }
+
+//전체 포스트 가져오기(페이징)
+export const getGyms = async () => {
+  try {
+    const response = await plabApi.get(`/gym`)
+    return response
+  } catch (error) {
+    console.error(`API Request 오류: ${error.message}`)
+    throw error
+  }
+}
