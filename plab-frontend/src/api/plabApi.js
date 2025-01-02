@@ -72,6 +72,12 @@ export const getProfile = async () => {
 //게임매칭 등록
 export const createGame = async (gameData) => {
   try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify,
+    }
     const response = await plabApi.post('/game', gameData)
     return response
   } catch (error) {
@@ -90,3 +96,8 @@ export const getGyms = async () => {
     throw error
   }
 }
+
+// insert into gyms(id,name,address,createdAt,updatedAt) values(1,'인천1체육관','어디어디',now(),now());
+// insert into gyms(id,name,address,createdAt,updatedAt) values(2,'인천2체육관','여기저기',now(),now());
+// insert into gyms(id,name,address,createdAt,updatedAt) values(3,'인천3체육관','요기요기',now(),now());
+// insert into gyms(id,name,address,createdAt,updatedAt) values(4,'인천4체육관','이곳저곳',now(),now());

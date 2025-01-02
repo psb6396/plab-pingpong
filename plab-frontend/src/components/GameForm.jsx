@@ -58,13 +58,14 @@ const GameForm = ({ onSubmit }) => {
       return
     }
 
-    onSubmit({
-      selectedGymId,
-      selectedDate,
-      selectedTime,
-      maximumPeople,
-      minimumPeople,
-    })
+    const formData = new FormData()
+    formData.append('gymId', selectedGymId)
+    formData.append('date', selectedDate)
+    formData.append('time', selectedTime)
+    formData.append('maxPeople', maximumPeople)
+    formData.append('minPeople', minimumPeople)
+
+    onSubmit(formData)
   })
 
   let age
