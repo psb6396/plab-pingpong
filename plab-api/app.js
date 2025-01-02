@@ -11,6 +11,7 @@ const passport = require('passport')
 const indexRouter = require('./routes/index')
 const authRouter = require('./routes/auth')
 const pageRouter = require('./routes/page')
+const gameRouter = require('./routes/game')
 const { sequelize } = require('./models/index')
 const passportConfig = require('./passport/index')
 const gymRouter = require('./routes/gym')
@@ -65,6 +66,7 @@ app.use('/', indexRouter)
 app.use('/auth', authRouter)
 app.use('/page', pageRouter)
 app.use('/gym', gymRouter)
+app.use('/game', gameRouter)
 
 //잘못된 라우터 경로 처리
 app.use((req, res, next) => {
