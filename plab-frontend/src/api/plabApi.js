@@ -72,12 +72,6 @@ export const getProfile = async () => {
 //게임매칭 등록
 export const createGame = async (gameData) => {
    try {
-      const config = {
-         headers: {
-            'Content-Type': 'application/json',
-         },
-         body: JSON.stringify,
-      }
       const response = await plabApi.post('/game', gameData)
       return response
    } catch (error) {
