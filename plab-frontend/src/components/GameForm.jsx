@@ -10,7 +10,6 @@ const GameForm = ({ onSubmit, initialValues }) => {
    const { gyms, loading, error } = useSelector((state) => state.gyms)
    useEffect(() => {
       dispatch(fetchGymsThunk())
-      console.log(gyms)
    }, [dispatch])
    const [selectedGymId, setSelectedGymId] = useState(null)
    const [selectedDate, setSelectedDate] = useState(() => {
