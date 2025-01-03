@@ -60,7 +60,7 @@ router.get('/created', isLoggedIn, async (req, res) => {
    try {
       const games = await Game.findAll({
          where: { managerId: req.user.id },
-         order: [['createdAt', 'DESC']], // 최신날짜 순으로 가져온다
+         order: [['createdAt', 'ASC']], // 최신날짜 순으로 가져온다
          include: [
             {
                model: User,

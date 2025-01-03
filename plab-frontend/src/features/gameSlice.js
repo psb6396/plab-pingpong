@@ -1,44 +1,61 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { createGame } from '../api/plabApi'
+import { createGame, getCreatedGames } from '../api/plabApi'
 
 //게임매치 등록 Thunk
-export const createGameThunk = createAsyncThunk(
-  'games/createGame',
-  async (gameData, { rejectWithValue }) => {
-    try {
+export const createGameThunk = createAsyncThunk('games/createGame', async (gameData, { rejectWithValue }) => {
+   try {
       const response = await createGame(gameData)
       return response.data
-    } catch (error) {
-      return rejectWithValue(
-        error.response?.data?.message || '게시물 등록 실패'
-      )
-    }
-  }
-)
+   } catch (error) {
+      return rejectWithValue(error.response?.data?.message || '게시물 등록 실패')
+   }
+})
+
+export const getCreatedGamesThunk = createAsyncThunk('games/getcreatedgames', async (_, { rejectWithValue }) => {
+   try {
+      const response = await getCreatedGames()
+      return response.data
+   } catch (error) {
+      return rejectWithValue(error.response?.data?.message || '매니저 본인이 만든 게임들 가져오기 실패')
+   }
+})
 
 const gameSlice = createSlice({
-  name: 'games',
-  initialState: {
-    games: [],
-    game: null,
-    loading: false,
-    error: null,
-  },
-  reducers: {},
-  extraReducers: (builder) => {
-    builder
-      .addCase(createGameThunk.pending, (state) => {
-        state.loading = true
-        state.error = null
-      })
-      .addCase(createGameThunk.fulfilled, (state, action) => {
-        state.loading = false
-      })
-      .addCase(createGameThunk.rejected, (state, action) => {
-        state.loading = false
-        state.error = action.payload
-      })
-  },
+   name: 'games',
+   initialState: {
+      games: [],
+      game: null,
+      loading: false,
+      error: null,
+   },
+   reducers: {},
+   extraReducers: (builder) => {
+      builder
+         .addCase(createGameThunk.pending, (state) => {
+            state.loading = true
+            state.error = null
+         })
+         .addCase(createGameThunk.fulfilled, (state, action) => {
+            state.loading = false
+         })
+         .addCase(createGameThunk.rejected, (state, action) => {
+            state.loading = false
+            state.error = action.payload
+         })
+      builder
+         .addCase(getCreatedGamesThunk.pending, (state) => {
+            state.loading = true
+            state.error = null
+         })
+         .addCase(getCreatedGamesThunk.fulfilled, (state, action) => {
+            state.loading = false
+            state.games = action.payload.games
+         })
+         .addCase(getCreatedGamesThunk.rejected, (state, action) => {
+            state.loading = false
+            state.error = action.payload
+         })
+   },
 })
 
 export default gameSlice.reducer

@@ -6,6 +6,7 @@ import { useCallback, useState, useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { getProfileThunk } from '../features/pageSlice'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
+import { getCreatedGamesThunk } from '../features/gameSlice'
 
 const Profile = () => {
    const dispatch = useDispatch()
@@ -19,10 +20,21 @@ const Profile = () => {
             alert('사용자 정보 가져오기를 실패했습니다.', error)
          })
    }, [dispatch])
+   const { games } = useSelector((state) => state.games)
+   const fetchCreatedGamesData = useCallback(() => {
+      dispatch(getCreatedGamesThunk())
+         .unwrap()
+         .then((result) => {})
+         .catch((error) => {
+            console.error('매니저 본인이 생성한 게임 리스트 가져오는 중 오류 발생:', error)
+            alert('매니저가 생성한 게임리스트 가져오기를 실패했습니다.', error)
+         })
+   })
 
    useEffect(() => {
       fetchProfileData()
-   }, [fetchProfileData])
+      fetchCreatedGamesData()
+   }, [fetchProfileData, fetchCreatedGamesData])
    return (
       <>
          {user && (

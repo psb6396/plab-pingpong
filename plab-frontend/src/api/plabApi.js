@@ -80,10 +80,21 @@ export const createGame = async (gameData) => {
    }
 }
 
-//전체 포스트 가져오기(페이징)
+//전체 체육관 가져오기
 export const getGyms = async () => {
    try {
       const response = await plabApi.get(`/gym`)
+      return response
+   } catch (error) {
+      console.error(`API Request 오류: ${error.message}`)
+      throw error
+   }
+}
+
+//매니저 프로필에서 생성한 게임 가져오기
+export const getCreatedGames = async () => {
+   try {
+      const response = await plabApi.get(`/game/created`)
       return response
    } catch (error) {
       console.error(`API Request 오류: ${error.message}`)
