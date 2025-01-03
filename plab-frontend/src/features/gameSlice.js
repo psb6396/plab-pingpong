@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { createGame, getCreatedGames } from '../api/plabApi'
+import { createGame, getCreatedGames, deleteGame } from '../api/plabApi'
 
 //게임매치 등록 Thunk
 export const createGameThunk = createAsyncThunk('games/createGame', async (gameData, { rejectWithValue }) => {
@@ -11,12 +11,23 @@ export const createGameThunk = createAsyncThunk('games/createGame', async (gameD
    }
 })
 
+//매니저 본인이 만든 게임들 가져오기 Thunk
 export const getCreatedGamesThunk = createAsyncThunk('games/getcreatedgames', async (_, { rejectWithValue }) => {
    try {
       const response = await getCreatedGames()
       return response.data
    } catch (error) {
       return rejectWithValue(error.response?.data?.message || '매니저 본인이 만든 게임들 가져오기 실패')
+   }
+})
+
+//게임 삭제 Thunk
+export const deleteGameThunk = createAsyncThunk('games/deletegame', async (id, { rejectWithValue }) => {
+   try {
+      const response = await deleteGame(id)
+      return id
+   } catch (error) {
+      return rejectWithValue(error.response?.data?.message || '게임 삭제 실패')
    }
 })
 
@@ -35,7 +46,7 @@ const gameSlice = createSlice({
             state.loading = true
             state.error = null
          })
-         .addCase(createGameThunk.fulfilled, (state, action) => {
+         .addCase(createGameThunk.fulfilled, (state) => {
             state.loading = false
          })
          .addCase(createGameThunk.rejected, (state, action) => {
@@ -52,6 +63,18 @@ const gameSlice = createSlice({
             state.games = action.payload.games
          })
          .addCase(getCreatedGamesThunk.rejected, (state, action) => {
+            state.loading = false
+            state.error = action.payload
+         })
+      builder
+         .addCase(deleteGameThunk.pending, (state) => {
+            state.loading = true
+            state.error = null
+         })
+         .addCase(deleteGameThunk.fulfilled, (state) => {
+            state.loading = false
+         })
+         .addCase(deleteGameThunk.rejected, (state, action) => {
             state.loading = false
             state.error = action.payload
          })

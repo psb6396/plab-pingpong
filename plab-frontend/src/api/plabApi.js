@@ -61,7 +61,7 @@ export const logoutUser = async () => {
 export const getProfile = async () => {
    try {
       const response = await plabApi.get(`/page/profile`)
-      console.log('asdf')
+      console.log('getProfile')
       return response
    } catch (error) {
       console.error(`API Request 오류: ${error.message}`)
@@ -73,6 +73,17 @@ export const getProfile = async () => {
 export const createGame = async (gameData) => {
    try {
       const response = await plabApi.post('/game', gameData)
+      return response
+   } catch (error) {
+      console.error(`API Request 오류: ${error.message}`)
+      throw error
+   }
+}
+
+//게임 삭제
+export const deleteGame = async (id) => {
+   try {
+      const response = await plabApi.delete(`/game/${id}`)
       return response
    } catch (error) {
       console.error(`API Request 오류: ${error.message}`)
@@ -95,6 +106,7 @@ export const getGyms = async () => {
 export const getCreatedGames = async () => {
    try {
       const response = await plabApi.get(`/game/created`)
+      console.log('getCreatedGames')
       return response
    } catch (error) {
       console.error(`API Request 오류: ${error.message}`)

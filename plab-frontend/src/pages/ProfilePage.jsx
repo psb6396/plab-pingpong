@@ -1,11 +1,11 @@
-import Profile from "../components/Profile"
+import Profile from '../components/Profile'
 
-const ProfilePage = () => {
-  return (
-    <>
-      <Profile />
-    </>
-  )
+const ProfilePage = ({ isAuthenticated, user }) => {
+   return (
+      <>
+         <Profile isAuthenticated={isAuthenticated} user={user} />
+      </>
+   )
 }
 
 export default ProfilePage

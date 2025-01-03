@@ -2,11 +2,11 @@ import React from 'react'
 import { Typography, Button, Avatar, Card, CardContent, Divider, IconButton } from '@mui/material'
 import Grid from '@mui/material/Grid2'
 import { useDispatch, useSelector } from 'react-redux'
-import { useCallback, useState, useEffect } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { useCallback, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { getProfileThunk } from '../features/pageSlice'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
-import { getCreatedGamesThunk } from '../features/gameSlice'
+import { getCreatedGamesThunk, deleteGameThunk } from '../features/gameSlice'
 
 const Profile = () => {
    const dispatch = useDispatch()
@@ -29,12 +29,31 @@ const Profile = () => {
             console.error('매니저 본인이 생성한 게임 리스트 가져오는 중 오류 발생:', error)
             alert('매니저가 생성한 게임리스트 가져오기를 실패했습니다.', error)
          })
-   })
+   }, [dispatch])
 
    useEffect(() => {
       fetchProfileData()
-      fetchCreatedGamesData()
-   }, [fetchProfileData, fetchCreatedGamesData])
+      if (user?.role === 'MANAGER') {
+         // Added null check for user
+         fetchCreatedGamesData()
+      }
+   }, [fetchProfileData, fetchCreatedGamesData, user?.role]) // Safeguard against user being null
+
+   const onClickDelete = useCallback(
+      (id) => {
+         dispatch(deleteGameThunk(id))
+            .unwrap()
+            .then(() => {
+               window.location.href = '/profile' //페이지 경로 이동
+            })
+            .catch((error) => {
+               console.error('게임 삭제 중 오류 발생:', error)
+               alert('게임 삭제 실패했습니다.', error)
+            })
+      },
+      [dispatch]
+   )
+   console.log(games)
    return (
       <>
          {user && (
@@ -75,35 +94,34 @@ const Profile = () => {
                      )}
 
                      {/* Application 1 */}
-                     <Divider />
-                     <Grid container spacing={2} alignItems="center" style={{ marginTop: 10 }}>
-                        <Grid item xs={2}>
-                           <Typography variant="body1">18:00</Typography>
-                        </Grid>
-                        <Grid item xs={8}>
-                           <Typography variant="body1">인천 어디어디 체육관</Typography>
-                        </Grid>
-                        <Grid item xs={2} style={{ textAlign: 'right' }}>
-                           <Button variant="outlined" color="error">
-                              취소
-                           </Button>
-                        </Grid>
-                     </Grid>
-
-                     {/* <Divider style={{ margin: '10px 0' }} />
-                     <Grid container spacing={2} alignItems="center">
-                        <Grid item xs={2}>
-                           <Typography variant="body1">19:00</Typography>
-                        </Grid>
-                        <Grid item xs={8}>
-                           <Typography variant="body1">서울 이런저런 체육관</Typography>
-                        </Grid>
-                        <Grid item xs={2} style={{ textAlign: 'right' }}>
-                           <Button variant="outlined" color="error">
-                              취소
-                           </Button>
-                        </Grid>
-                     </Grid> */}
+                     {games.length > 0 ? (
+                        <>
+                           {games.map((game) => (
+                              <>
+                                 <Divider />
+                                 <Grid container spacing={2} alignItems="center" style={{ marginTop: 10 }}>
+                                    <Grid item xs={2}>
+                                       <Typography variant="body1">{game.datetime}</Typography>
+                                    </Grid>
+                                    <Grid item xs={8}>
+                                       <Typography variant="body1">{game.Gym.name}</Typography>
+                                    </Grid>
+                                    <Grid item xs={8}>
+                                       <Typography variant="body1">주소 : {game.Gym.address}</Typography>
+                                    </Grid>
+                                    <Grid item xs={2} style={{ textAlign: 'right', marginBottom: 10 }}>
+                                       <Button variant="outlined" color="error" onClick={() => onClickDelete(game.id)}>
+                                          게임 삭제
+                                       </Button>
+                                    </Grid>
+                                 </Grid>
+                              </>
+                           ))}
+                           <Divider />
+                        </>
+                     ) : (
+                        <></>
+                     )}
                   </CardContent>
                </Card>
 

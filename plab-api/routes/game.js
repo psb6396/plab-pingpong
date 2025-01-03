@@ -84,4 +84,26 @@ router.get('/created', isLoggedIn, async (req, res) => {
    }
 })
 
+//게임삭제 localhost:8000/game/:id
+router.delete('/:id', isLoggedIn, async (req, res) => {
+   try {
+      //삭제할 게임 존재 여부 확인
+      const game = await Game.findOne({ where: { id: req.params.id, managerId: req.user.id } })
+      if (!game) {
+         return res.status(404).json({ success: false, message: '게임을 찾을 수 없습니다.' })
+      }
+
+      // 게임 삭제
+      await game.destroy()
+
+      res.json({
+         success: true,
+         message: '게임이 성공적으로 삭제되었습니다.',
+      })
+   } catch (error) {
+      console.error(error)
+      res.status(500).json({ success: false, message: '게임 삭제 중 오류가 발생했습니다.', error })
+   }
+})
+
 module.exports = router
