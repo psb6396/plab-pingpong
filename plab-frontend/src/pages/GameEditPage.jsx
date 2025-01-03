@@ -35,10 +35,10 @@ const GameEditPage = () => {
    if (error) return <p>에러발생: {error}</p>
 
    return (
-      <Container>
+      <>
          <h1>게임매칭 수정</h1>
          {game && <GameForm onSubmit={handleSubmit} initialValues={game} />}
-      </Container>
+      </>
    )
 }
 
