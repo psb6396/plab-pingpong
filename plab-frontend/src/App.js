@@ -9,6 +9,7 @@ import SignupPage from './pages/SignupPage'
 import { checkAuthStatusThunk } from './features/authslice'
 import ProfilePage from './pages/ProfilePage'
 import GameCreatePage from './pages/GameCreatePage'
+import GameEditPage from './pages/GameEditPage'
 
 function App() {
    const dispatch = useDispatch()
@@ -26,6 +27,7 @@ function App() {
             <Route path="/signup" element={<SignupPage />} />
             <Route path="/profile" element={<ProfilePage isAuthenticated={isAuthenticated} user={user} />} />
             <Route path="/gamecreate" element={<GameCreatePage />} />
+            <Route path="/game/edit/:id" element={<GameEditPage />} />
          </Routes>
       </>
    )

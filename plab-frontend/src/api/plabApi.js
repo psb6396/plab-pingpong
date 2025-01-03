@@ -114,6 +114,17 @@ export const getCreatedGames = async () => {
    }
 }
 
+//특정 게임 가져오기
+export const getGameById = async (id) => {
+   try {
+      const response = await plabApi.get(`/game/${id}`)
+      return response
+   } catch (error) {
+      console.error(`API Request 오류: ${error.message}`)
+      throw error
+   }
+}
+
 // insert into gyms(id,name,address,createdAt,updatedAt) values(1,'인천1체육관','어디어디',now(),now());
 // insert into gyms(id,name,address,createdAt,updatedAt) values(2,'인천2체육관','여기저기',now(),now());
 // insert into gyms(id,name,address,createdAt,updatedAt) values(3,'인천3체육관','요기요기',now(),now());

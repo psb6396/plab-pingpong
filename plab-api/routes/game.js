@@ -84,6 +84,32 @@ router.get('/created', isLoggedIn, async (req, res) => {
    }
 })
 
+//특정 게임 불러오기(id로 게임 조회)
+router.get('/:id', async (req, res) => {
+   try {
+      const game = await Game.findOne({
+         where: { id: req.params.id },
+         include: [
+            {
+               model: Gym,
+               attributes: ['name', 'address'],
+            },
+         ],
+      })
+      if (!game) {
+         return res.status(404).json({ success: false, message: '게임을 찾을 수 없습니다.' })
+      }
+      res.json({
+         success: true,
+         game,
+         message: '게시물을 성공적으로 불러왔습니다.',
+      })
+   } catch (error) {
+      console.error(error)
+      res.status(500).json({ success: false, message: '게임을 불러오는 중 오류가 발생했습니다.', error })
+   }
+})
+
 //게임삭제 localhost:8000/game/:id
 router.delete('/:id', isLoggedIn, async (req, res) => {
    try {
