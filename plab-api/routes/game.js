@@ -80,13 +80,11 @@ router.get('/created', isLoggedIn, async (req, res) => {
     })
   } catch (error) {
     console.error(error)
-    res
-      .status(500)
-      .json({
-        success: false,
-        message: '게임 리스트를 불러오는 중 오류가 발생했습니다.',
-        error,
-      })
+    res.status(500).json({
+      success: false,
+      message: '게임 리스트를 불러오는 중 오류가 발생했습니다.',
+      error,
+    })
   }
 })
 
@@ -107,20 +105,24 @@ router.get('/:id', isLoggedIn, async (req, res) => {
         .status(404)
         .json({ success: false, message: '게임을 찾을 수 없습니다.' })
     }
+    console.log('isodatetime:', game.datetime)
+    const dateObject = new Date(game.datetime)
+    const jsgamedate = dateObject.toString()
+    console.log('jsdatetime:', jsgamedate)
+
     res.json({
       success: true,
       game,
+      jsgamedate,
       message: '게시물을 성공적으로 불러왔습니다.',
     })
   } catch (error) {
     console.error(error)
-    res
-      .status(500)
-      .json({
-        success: false,
-        message: '게임을 불러오는 중 오류가 발생했습니다.',
-        error,
-      })
+    res.status(500).json({
+      success: false,
+      message: '게임을 불러오는 중 오류가 발생했습니다.',
+      error,
+    })
   }
 })
 
@@ -146,13 +148,11 @@ router.delete('/:id', isLoggedIn, async (req, res) => {
     })
   } catch (error) {
     console.error(error)
-    res
-      .status(500)
-      .json({
-        success: false,
-        message: '게임 삭제 중 오류가 발생했습니다.',
-        error,
-      })
+    res.status(500).json({
+      success: false,
+      message: '게임 삭제 중 오류가 발생했습니다.',
+      error,
+    })
   }
 })
 

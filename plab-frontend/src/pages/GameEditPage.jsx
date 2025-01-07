@@ -10,7 +10,7 @@ const GameEditPage = () => {
   const { id } = useParams() //post의 id
   const dispatch = useDispatch()
 
-  const { game, loading, error } = useSelector((state) => state.games) // 해당 게임에 대한 기존정보.
+  const { gamedate, game, loading, error } = useSelector((state) => state.games) // 해당 게임에 대한 기존정보.
   //게시물 데이터 불러오기
   useEffect(() => {
     dispatch(fetchGameByIdThunk(id))
@@ -33,11 +33,18 @@ const GameEditPage = () => {
   if (loading) return <p>로딩중</p>
   if (error) return <p>에러발생: {error}</p>
 
-  console.log(game)
+  console.log('game:', game)
+  console.log('gamedate:', gamedate)
   return (
     <>
       <h1>게임매칭 수정</h1>
-      {game && <GameForm onSubmit={handleSubmit} initialValues={game} />}
+      {game && (
+        <GameForm
+          onSubmit={handleSubmit}
+          initialGame={game}
+          initialDate={gamedate}
+        />
+      )}
     </>
   )
 }

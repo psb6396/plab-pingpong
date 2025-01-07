@@ -14,22 +14,26 @@ import { useState, useCallback, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchGymsThunk } from '../features/gymSlice'
 
-const GameForm = ({ onSubmit, initialValues }) => {
-  let jsdate
-  if (initialValues) {
-    jsdate = new Date(initialValues.datetime)
-  }
+const GameForm = ({ onSubmit, initialGame, initialDate }) => {
+  // let jsdate
+  // if (initialValues) {
+  //   jsdate = new Date(initialValues.datetime)
+  // }
+  console.log('initialGame:', initialGame)
+  console.log('initialDate:', initialDate)
+  // console.log('initialDatetoString:', initialDate.toString())
+
   const dispatch = useDispatch()
   const { gyms, loading, error } = useSelector((state) => state.gyms)
   useEffect(() => {
     dispatch(fetchGymsThunk())
   }, [dispatch])
   const [selectedGymId, setSelectedGymId] = useState(
-    initialValues ? initialValues.GymId : null
+    initialGame ? initialGame.GymId : null
   )
   const [selectedDate, setSelectedDate] = useState(
-    initialValues
-      ? jsdate
+    initialDate
+      ? initialDate.toString()
       : () => {
           const today = new Date()
           return new Date(
@@ -140,6 +144,7 @@ const GameForm = ({ onSubmit, initialValues }) => {
                     {Array.from({ length: 23 }, (_, i) => i + 1).map((hour) => (
                       <MenuItem value={hour}>
                         {hour.toString().padStart(2, '0')}:00
+                        {console.log(hour)}
                       </MenuItem>
                     ))}
                   </Select>
