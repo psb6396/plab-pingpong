@@ -68,7 +68,7 @@ const GameForm = ({ onSubmit, initialGame }) => {
       return
     }
 
-    const isodate = selectedDate.toString().substring(0, 10)
+    const isodate = selectedDate.toString().substring(0, 10) //엄밀히 따지면 ISO 는 아닐듯
 
     const formData = new FormData()
     formData.append('gymId', selectedGymId)
@@ -114,7 +114,7 @@ const GameForm = ({ onSubmit, initialGame }) => {
                   </Select>
                 </FormControl>
               </Grid>
-              {/* <Grid item xs={12}>
+              <Grid item xs={12}>
                 <TextField
                   fullWidth
                   label='날짜'
@@ -123,7 +123,7 @@ const GameForm = ({ onSubmit, initialGame }) => {
                   value={selectedDate.toISOString().substring(0, 10)}
                   onChange={(e) => setSelectedDate(new Date(e.target.value))}
                 />
-              </Grid> */}
+              </Grid>
               <Grid item xs={12}>
                 <FormControl fullWidth>
                   <InputLabel id='demo-simple-select-label'>시간</InputLabel>
