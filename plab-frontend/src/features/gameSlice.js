@@ -70,7 +70,6 @@ const gameSlice = createSlice({
   initialState: {
     games: [],
     game: null,
-    gamedate: null,
     loading: false,
     error: null,
   },
@@ -121,7 +120,7 @@ const gameSlice = createSlice({
       .addCase(fetchGameByIdThunk.fulfilled, (state, action) => {
         state.loading = false
         state.game = action.payload.game
-        state.gamedate = action.payload.jsgamedate
+        // state.gamedate = action.payload.jsgamedate
       })
       .addCase(fetchGameByIdThunk.rejected, (state, action) => {
         state.loading = false

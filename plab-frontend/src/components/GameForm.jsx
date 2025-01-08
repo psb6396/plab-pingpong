@@ -13,18 +13,9 @@ import Grid from '@mui/material/Grid2'
 import { useState, useCallback, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchGymsThunk } from '../features/gymSlice'
+import { makeInitialDate } from '../utils/datetime'
 
-const GameForm = ({ onSubmit, initialGame, initialDate }) => {
-  // let jsdate
-  // if (initialValues) {
-  //   jsdate = new Date(initialValues.datetime)
-  // }
-  console.log('initialGame:', initialGame)
-  console.log('initialDate:', initialDate)
-  console.log('jsGameDate:', new Date(initialDate))
-  const initialgamedate = new Date(initialDate)
-  // console.log('initialDatetoString:', initialDate.toString())
-
+const GameForm = ({ onSubmit, initialGame }) => {
   const dispatch = useDispatch()
   const { gyms, loading, error } = useSelector((state) => state.gyms)
   useEffect(() => {
@@ -34,8 +25,8 @@ const GameForm = ({ onSubmit, initialGame, initialDate }) => {
     initialGame ? initialGame.GymId : null
   )
   const [selectedDate, setSelectedDate] = useState(
-    initialDate
-      ? initialgamedate
+    initialGame
+      ? makeInitialDate(initialGame.datetime)
       : () => {
           const today = new Date()
           return new Date(
