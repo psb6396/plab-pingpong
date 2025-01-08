@@ -106,8 +106,8 @@ router.get('/:id', isLoggedIn, async (req, res) => {
         .json({ success: false, message: '게임을 찾을 수 없습니다.' })
     }
     console.log('isodatetime:', game.datetime)
-    const dateObject = new Date(game.datetime)
-    const jsgamedate = dateObject.toString()
+    const jsgamedate = new Date(game.datetime)
+    // const jsgamedate = jsgamedate.toString()
     console.log('jsdatetime:', jsgamedate)
 
     res.json({

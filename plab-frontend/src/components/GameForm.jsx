@@ -21,6 +21,8 @@ const GameForm = ({ onSubmit, initialGame, initialDate }) => {
   // }
   console.log('initialGame:', initialGame)
   console.log('initialDate:', initialDate)
+  console.log('jsGameDate:', new Date(initialDate))
+  const initialgamedate = new Date(initialDate)
   // console.log('initialDatetoString:', initialDate.toString())
 
   const dispatch = useDispatch()
@@ -33,7 +35,7 @@ const GameForm = ({ onSubmit, initialGame, initialDate }) => {
   )
   const [selectedDate, setSelectedDate] = useState(
     initialDate
-      ? initialDate.toString()
+      ? initialgamedate
       : () => {
           const today = new Date()
           return new Date(
@@ -75,7 +77,7 @@ const GameForm = ({ onSubmit, initialGame, initialDate }) => {
       return
     }
 
-    const isodate = selectedDate.toISOString().substring(0, 10)
+    const isodate = selectedDate.toString().substring(0, 10)
 
     const formData = new FormData()
     formData.append('gymId', selectedGymId)
@@ -121,7 +123,7 @@ const GameForm = ({ onSubmit, initialGame, initialDate }) => {
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid item xs={12}>
+              {/* <Grid item xs={12}>
                 <TextField
                   fullWidth
                   label='날짜'
@@ -130,7 +132,7 @@ const GameForm = ({ onSubmit, initialGame, initialDate }) => {
                   value={selectedDate.toISOString().substring(0, 10)}
                   onChange={(e) => setSelectedDate(new Date(e.target.value))}
                 />
-              </Grid>
+              </Grid> */}
               <Grid item xs={12}>
                 <FormControl fullWidth>
                   <InputLabel id='demo-simple-select-label'>시간</InputLabel>
@@ -144,7 +146,7 @@ const GameForm = ({ onSubmit, initialGame, initialDate }) => {
                     {Array.from({ length: 23 }, (_, i) => i + 1).map((hour) => (
                       <MenuItem value={hour}>
                         {hour.toString().padStart(2, '0')}:00
-                        {console.log(hour)}
+                        {/* {console.log(hour)} */}
                       </MenuItem>
                     ))}
                   </Select>
