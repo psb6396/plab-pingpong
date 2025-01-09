@@ -68,11 +68,15 @@ const GameForm = ({ onSubmit, initialGame }) => {
       return
     }
 
-    const isodate = selectedDate.toString().substring(0, 10) //엄밀히 따지면 ISO 는 아닐듯
+    // const isodate = selectedDate.toString().substring(0, 10) //엄밀히 따지면 ISO 는 아닐듯
+    // const date = selectedDate.toString()
+    const date = selectedDate
+
+    console.log('submit할때 date값:', date)
 
     const formData = new FormData()
     formData.append('gymId', selectedGymId)
-    formData.append('date', isodate)
+    formData.append('date', date)
     formData.append('time', selectedTime)
     formData.append('maxPeople', maximumPeople)
     formData.append('minPeople', minimumPeople)

@@ -8,12 +8,17 @@ const router = express.Router()
 router.post('/', isLoggedIn, async (req, res) => {
   try {
     // console.log(req.body)
+    const offset = new Date().getTimezoneOffset() * 60000
 
     const gymId = req.body.gymId
-    const dateObject = new Date(req.body.date) // Parse the date string into a Date object
-    dateObject.setHours(req.body.time) // Set the hour value dynamically
-    const datetime = dateObject.toISOString().slice(0, 19).replace('T', ' ')
+    const originalDateObject = new Date(req.body.date) // Parse the date string into a Date object
+    const finalDateObject = new Date(originalDateObject - offset)
 
+    finalDateObject.setHours(req.body.time) // Set the hour value dynamically
+    // const datetime = dateObject.toISOString().slice(0, 19).replace('T', ' ')
+    const datetime = finalDateObject
+    console.log('datetime:', datetime)
+    console.log('datetime.toString():', datetime.toString())
     //입력받은 조건들로 같은 시간대에 매니저본인의 매칭예약이 존재하는지 확인
     const exGame = await Game.findOne({
       where: { datetime: datetime, managerId: req.user.id }, //manager_id도 넣어줘야함.
