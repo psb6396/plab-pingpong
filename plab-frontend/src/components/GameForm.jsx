@@ -36,7 +36,9 @@ const GameForm = ({ onSubmit, initialGame }) => {
           )
         }
   )
-  const [selectedTime, setSelectedTime] = useState(null)
+  const [selectedTime, setSelectedTime] = useState(
+    initialGame ? initialGame.datetime : null
+  )
   const [maximumPeople, setMaximumPeople] = useState(null)
   const [minimumPeople, setMinimumPeople] = useState(null)
 
