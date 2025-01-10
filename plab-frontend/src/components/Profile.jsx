@@ -129,6 +129,10 @@ const Profile = () => {
                             ).getDate()}일 ${new Date(
                               game.datetime
                             ).getHours()}시`}
+                            {/* {new Date(game.datetime).toLocaleDateString(
+                              'en-CA'
+                            )}
+                            {new Date(game.datetime).toLocaleDateString()} */}
                           </Typography>
                         </Grid>
                         <Grid item xs={8}>

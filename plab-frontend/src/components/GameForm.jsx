@@ -124,8 +124,13 @@ const GameForm = ({ onSubmit, initialGame }) => {
                   label='날짜'
                   variant='outlined'
                   type='date'
-                  value={selectedDate.toISOString().substring(0, 10)}
-                  // value={selectedDate.toDateString()}
+                  // value={selectedDate.toISOString().substring(0, 10)}
+                  value={`${selectedDate.getFullYear()}-${String(
+                    selectedDate.getMonth() + 1
+                  ).padStart(2, '0')}-${String(selectedDate.getDate()).padStart(
+                    2,
+                    '0'
+                  )}`}
                   onChange={(e) => setSelectedDate(new Date(e.target.value))}
                 />
               </Grid>
