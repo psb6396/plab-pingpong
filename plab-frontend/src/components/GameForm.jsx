@@ -125,6 +125,7 @@ const GameForm = ({ onSubmit, initialGame }) => {
                   variant='outlined'
                   type='date'
                   value={selectedDate.toISOString().substring(0, 10)}
+                  // value={selectedDate.toDateString()}
                   onChange={(e) => setSelectedDate(new Date(e.target.value))}
                 />
               </Grid>
