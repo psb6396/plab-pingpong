@@ -15,7 +15,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { fetchGymsThunk } from '../features/gymSlice'
 import { makeInitialDate } from '../utils/datetime'
 
-const GameForm = ({ onSubmit, initialGame }) => {
+const GameForm = ({ onSubmit, initialGame = {} }) => {
+  console.log(makeInitialDate(initialGame.datetime).getHours())
   const dispatch = useDispatch()
   const { gyms, loading, error } = useSelector((state) => state.gyms)
   useEffect(() => {
@@ -37,10 +38,14 @@ const GameForm = ({ onSubmit, initialGame }) => {
         }
   )
   const [selectedTime, setSelectedTime] = useState(
-    initialGame ? initialGame.datetime : null
+    initialGame ? makeInitialDate(initialGame.datetime).getHours() : null
   )
-  const [maximumPeople, setMaximumPeople] = useState(null)
-  const [minimumPeople, setMinimumPeople] = useState(null)
+  const [maximumPeople, setMaximumPeople] = useState(
+    initialGame ? initialGame.maximum_people : null
+  )
+  const [minimumPeople, setMinimumPeople] = useState(
+    initialGame ? initialGame.minimum_people : null
+  )
 
   const onClickSubmit = useCallback((e) => {
     e.preventDefault()

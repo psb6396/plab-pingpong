@@ -54,6 +54,12 @@ router.post('/', isLoggedIn, async (req, res) => {
   }
 })
 
+//게임 수정 localhost:8000/game/:id
+router.put('/:id', isLoggedIn, async (req, res) => {
+  try {
+  } catch (error) {}
+})
+
 //매니저 본인이 생성한 게임 불러오기
 router.get('/created', isLoggedIn, async (req, res) => {
   try {
