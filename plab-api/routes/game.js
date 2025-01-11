@@ -13,7 +13,7 @@ router.post('/', isLoggedIn, async (req, res) => {
     const datetime = originalDateObject
     console.log('datetime:', datetime)
     console.log('datetime.toString():', datetime.toString())
-    //입력받은 조건들로 같은 시간대에 매니저본인의 매칭예약이 존재하는지 확인
+    //입력받은 조건들로 같은 시간대에 매니저본인의 매칭예약이 존재하는지 확인, (체육관 겹치는지는 확인 안됨.)
     const exGame = await Game.findOne({
       where: { datetime: datetime, managerId: req.user.id }, //manager_id도 넣어줘야함.
     })
@@ -57,6 +57,23 @@ router.post('/', isLoggedIn, async (req, res) => {
 //게임 수정 localhost:8000/game/:id
 router.put('/:id', isLoggedIn, async (req, res) => {
   try {
+    const originalGame = await Game.findOne({
+      where: { id: req.params.id, managerId: req.user.id },
+    })
+    if (!originalGame) {
+      return res
+        .status(404)
+        .json({ success: false, message: '게임을 찾을 수 없습니다.' })
+    }
+    const gymId = req.body.gymId
+    const originalDateObject = new Date(req.body.date) // Parse the date string into a Date object
+    originalDateObject.setHours(req.body.time) // Set the hour value dynamically
+    const datetime = originalDateObject
+    //게임 수정
+    // 먼저 매니저본인과 수정된 시간대를 포함하는 게임을 찾아야함 중복찾기 ㅇㅇ
+    const alreadyExistingGame = await Game.findAll()
+
+    await originalGame.update({})
   } catch (error) {}
 })
 
