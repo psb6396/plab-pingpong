@@ -72,8 +72,7 @@ router.put('/:id', isManager, async (req, res) => {
     // 게임 수정
     // 먼저 매니저본인과 수정된 시간대를 포함하는 게임을 찾아야함 중복찾기 ㅇㅇ
     const sameTimeGame = await Game.findAll({
-      managerId: req.user.id,
-      datetime: datetime,
+      where: { managerId: req.user.id, datetime: datetime },
     })
     if (sameTimeGame) {
       return res.status(404).json({
