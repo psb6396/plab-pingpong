@@ -66,15 +66,16 @@ router.put('/:id', isManager, async (req, res) => {
         .json({ success: false, message: '게임을 찾을 수 없습니다.' })
     }
     // const gymId = req.body.gymId
-    const originalDateObject = new Date(req.body.date) // Parse the date string into a Date object
-    originalDateObject.setHours(req.body.time) // Set the hour value dynamically
-    const datetime = originalDateObject
+    const DateObject = new Date(req.body.date) // Parse the date string into a Date object
+    DateObject.setHours(req.body.time) // Set the hour value dynamically
+    const datetime = DateObject
     // 게임 수정
     // 먼저 매니저본인과 수정된 시간대를 포함하는 게임을 찾아야함 중복찾기 ㅇㅇ
     const sameTimeGame = await Game.findAll({
       where: { managerId: req.user.id, datetime: datetime },
     })
-    if (sameTimeGame) {
+
+    if (sameTimeGame.length !== 0) {
       return res.status(404).json({
         success: false,
         message: '동일한 시간대에 생성된 게임이 있습니다.',
