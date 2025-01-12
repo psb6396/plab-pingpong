@@ -4,6 +4,7 @@ import {
   getCreatedGames,
   deleteGame,
   getGameById,
+  updateGame,
 } from '../api/plabApi'
 
 //게임매치 등록 Thunk
@@ -17,6 +18,35 @@ export const createGameThunk = createAsyncThunk(
       return rejectWithValue(
         error.response?.data?.message || '게시물 등록 실패'
       )
+    }
+  }
+)
+
+//게임 수정 Thunk
+export const updateGameThunk = createAsyncThunk(
+  'games/updateGame',
+  async (data, { rejectWithValue }) => {
+    try {
+      const { id, gameData } = data
+      const response = await updateGame(id, gameData)
+      return response.data.game
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || '게시물 등록 실패'
+      )
+    }
+  }
+)
+
+//게임 삭제 Thunk
+export const deleteGameThunk = createAsyncThunk(
+  'games/deletegame',
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await deleteGame(id)
+      return id
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || '게임 삭제 실패')
     }
   }
 )
@@ -48,19 +78,6 @@ export const fetchGameByIdThunk = createAsyncThunk(
       return rejectWithValue(
         error.response?.data?.message || '게시물 불러오기 실패'
       )
-    }
-  }
-)
-
-//게임 삭제 Thunk
-export const deleteGameThunk = createAsyncThunk(
-  'games/deletegame',
-  async (id, { rejectWithValue }) => {
-    try {
-      const response = await deleteGame(id)
-      return id
-    } catch (error) {
-      return rejectWithValue(error.response?.data?.message || '게임 삭제 실패')
     }
   }
 )
@@ -123,6 +140,20 @@ const gameSlice = createSlice({
         // state.gamedate = action.payload.jsgamedate
       })
       .addCase(fetchGameByIdThunk.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.payload
+      })
+    builder
+      .addCase(updateGameThunk.pending, (state) => {
+        state.loading = true
+        state.error = null
+      })
+      .addCase(updateGameThunk.fulfilled, (state) => {
+        state.loading = false
+        // state.game = action.payload.game
+        // state.gamedate = action.payload.jsgamedate
+      })
+      .addCase(updateGameThunk.rejected, (state, action) => {
         state.loading = false
         state.error = action.payload
       })
