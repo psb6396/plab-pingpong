@@ -4,7 +4,7 @@ import GameForm from '../components/GameForm'
 import { useParams } from 'react-router-dom'
 import { useCallback, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchGameByIdThunk } from '../features/gameSlice'
+import { fetchGameByIdThunk, updateGameThunk } from '../features/gameSlice'
 
 const GameEditPage = () => {
   const { id } = useParams() //post의 id
@@ -17,19 +17,20 @@ const GameEditPage = () => {
     dispatch(fetchGameByIdThunk(id))
   }, [dispatch, id])
 
-  const handleSubmit = useCallback()
-  // ((gameData) => {
-  //    dispatch(updatePostThunk({ id, gameData }))
-  //       .unwrap()
-  //       .then(() => {
-  //          window.location.href = '/profile' // 수정 후 메인페이지로 이동
-  //       })
-  //       .catch((error) => {
-  //          console.error('게시물 수정 중 오류 발생:', error)
-  //          alert('게시물 수정에 실패했습니다.', error)
-  //       })
-  // },
-  // [dispatch, id])
+  const handleSubmit = useCallback(
+    (gameData) => {
+      dispatch(updateGameThunk({ id, gameData }))
+        .unwrap()
+        .then(() => {
+          window.location.href = '/profile' // 수정 후 프로필페이지로 이동
+        })
+        .catch((error) => {
+          console.error('게임 수정 중 오류 발생:', error)
+          alert('게임 수정에 실패했습니다.', error)
+        })
+    },
+    [dispatch, id]
+  )
 
   if (loading) return <p>로딩중</p>
   if (error) return <p>에러발생: {error}</p>

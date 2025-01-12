@@ -33,7 +33,7 @@ exports.isManager = (req, res, next) => {
   // 로그인 상태 확인
   if (req.isAuthenticated()) {
     // 사용자 권한 확인
-    if (req.user && req.user.role === 'ADMIN') {
+    if (req.user && req.user.role === 'MANAGER') {
       //role이 ADMIN 이면 다음 미들웨어로 이동
       next()
     } else {

@@ -16,7 +16,7 @@ import { fetchGymsThunk } from '../features/gymSlice'
 import { makeInitialDate } from '../utils/datetime'
 
 const GameForm = ({ onSubmit, initialGame = {} }) => {
-  console.log(makeInitialDate(initialGame.datetime).getHours())
+  console.log('렌더링 확인')
   const dispatch = useDispatch()
   const { gyms, loading, error } = useSelector((state) => state.gyms)
   useEffect(() => {
