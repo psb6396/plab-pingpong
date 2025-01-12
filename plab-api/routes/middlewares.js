@@ -40,7 +40,7 @@ exports.isManager = (req, res, next) => {
       //권한 부족
       res.status(403).json({
         success: false,
-        message: '관리자 권한이 필요합니다.',
+        message: '매니저 권한이 필요합니다.',
       })
     }
   } else {

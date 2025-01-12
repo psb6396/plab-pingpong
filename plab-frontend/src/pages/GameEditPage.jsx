@@ -11,7 +11,8 @@ const GameEditPage = () => {
   const dispatch = useDispatch()
 
   const { game, loading, error } = useSelector((state) => state.games) // 해당 게임에 대한 기존정보.
-  //게시물 데이터 불러오기
+
+  //게임 데이터 불러오기
   useEffect(() => {
     dispatch(fetchGameByIdThunk(id))
   }, [dispatch, id])
@@ -33,7 +34,7 @@ const GameEditPage = () => {
   if (loading) return <p>로딩중</p>
   if (error) return <p>에러발생: {error}</p>
 
-  console.log('game:', game)
+  // console.log('game:', game)
 
   return (
     <>

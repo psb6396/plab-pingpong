@@ -10,7 +10,7 @@ import {
   FormControl,
 } from '@mui/material'
 import Grid from '@mui/material/Grid2'
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useCallback, useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchGymsThunk } from '../features/gymSlice'
 import { makeInitialDate } from '../utils/datetime'
@@ -91,7 +91,12 @@ const GameForm = ({ onSubmit, initialGame = {} }) => {
     onSubmit(formData)
   })
 
-  let age
+  // state 변경시 등록/수정 버튼 재연산 방지
+  const submitButtonLabel = useMemo(
+    () => (initialGame.id ? '매치수정' : '매치생성'),
+    [initialGame.id]
+  )
+
   return (
     <div>
       {/* Match Creation Form */}
@@ -197,7 +202,7 @@ const GameForm = ({ onSubmit, initialGame = {} }) => {
                   variant='contained'
                   color='primary'
                 >
-                  매치 생성
+                  {submitButtonLabel}
                 </Button>
               </Grid>
             </Grid>

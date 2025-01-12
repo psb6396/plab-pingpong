@@ -1,11 +1,11 @@
 const express = require('express')
 const path = require('path')
 const { Game, Gym, User } = require('../models')
-const { isLoggedIn } = require('./middlewares')
+const { isLoggedIn, isManager } = require('./middlewares')
 const router = express.Router()
 
 //게임 등록 localhost:8000/game
-router.post('/', isLoggedIn, async (req, res) => {
+router.post('/', isManager, async (req, res) => {
   try {
     const gymId = req.body.gymId
     const originalDateObject = new Date(req.body.date) // Parse the date string into a Date object
@@ -55,7 +55,7 @@ router.post('/', isLoggedIn, async (req, res) => {
 })
 
 //게임 수정 localhost:8000/game/:id
-router.put('/:id', isLoggedIn, async (req, res) => {
+router.put('/:id', isManager, async (req, res) => {
   try {
     const originalGame = await Game.findOne({
       where: { id: req.params.id, managerId: req.user.id },
@@ -65,16 +65,57 @@ router.put('/:id', isLoggedIn, async (req, res) => {
         .status(404)
         .json({ success: false, message: '게임을 찾을 수 없습니다.' })
     }
-    const gymId = req.body.gymId
+    // const gymId = req.body.gymId
     const originalDateObject = new Date(req.body.date) // Parse the date string into a Date object
     originalDateObject.setHours(req.body.time) // Set the hour value dynamically
     const datetime = originalDateObject
-    //게임 수정
+    // 게임 수정
     // 먼저 매니저본인과 수정된 시간대를 포함하는 게임을 찾아야함 중복찾기 ㅇㅇ
-    const alreadyExistingGame = await Game.findAll({ managerId: req.user.id })
+    const sameTimeGame = await Game.findAll({
+      managerId: req.user.id,
+      datetime: datetime,
+    })
+    if (sameTimeGame) {
+      return res.status(404).json({
+        success: false,
+        message: '동일한 시간대에 생성된 게임이 있습니다.',
+      })
+    }
+    await originalGame.update({
+      gymId: req.body.gymId,
+      datetime: datetime,
+      maximum_people: req.body.maxPeople,
+      minimum_people: req.body.minPeople,
+    })
 
-    await originalGame.update({})
-  } catch (error) {}
+    //업데이트 된 게임 다시 조회
+    const updatedGame = await Game.findOne({
+      where: { id: req.params.id },
+      include: [
+        {
+          model: User,
+          attributes: ['id', 'nick', 'email'],
+        },
+        {
+          model: Gym,
+          attributes: ['name', 'address'],
+        },
+      ],
+    })
+
+    res.json({
+      success: true,
+      game: updatedGame,
+      message: '게임이 성공적으로 수정되었습니다.',
+    })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({
+      success: false,
+      message: '게임 수정 중 오류가 발생했습니다.',
+      error,
+    })
+  }
 })
 
 //매니저 본인이 생성한 게임 불러오기
@@ -149,7 +190,7 @@ router.get('/:id', isLoggedIn, async (req, res) => {
 })
 
 //게임삭제 localhost:8000/game/:id
-router.delete('/:id', isLoggedIn, async (req, res) => {
+router.delete('/:id', isManager, async (req, res) => {
   try {
     //삭제할 게임 존재 여부 확인
     const game = await Game.findOne({
