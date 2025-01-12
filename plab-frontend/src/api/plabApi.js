@@ -80,6 +80,17 @@ export const createGame = async (gameData) => {
   }
 }
 
+//게임 수정
+export const updateGame = async (id, gameData) => {
+  try {
+    const response = await plabApi.put(`/game/${id}`, gameData)
+    return response
+  } catch (error) {
+    console.error(`API Request 오류: ${error.message}`)
+    throw error
+  }
+}
+
 //게임 삭제
 export const deleteGame = async (id) => {
   try {
@@ -124,8 +135,3 @@ export const getGameById = async (id) => {
     throw error
   }
 }
-
-// insert into gyms(id,name,address,createdAt,updatedAt) values(1,'인천1체육관','어디어디',now(),now());
-// insert into gyms(id,name,address,createdAt,updatedAt) values(2,'인천2체육관','여기저기',now(),now());
-// insert into gyms(id,name,address,createdAt,updatedAt) values(3,'인천3체육관','요기요기',now(),now());
-// insert into gyms(id,name,address,createdAt,updatedAt) values(4,'인천4체육관','이곳저곳',now(),now());
