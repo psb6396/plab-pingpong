@@ -221,7 +221,7 @@ router.delete('/:id', isManager, async (req, res) => {
 //게임에 참가 신청하기
 router.post('/:id', isLoggedIn, async (req, res) => {
   try {
-    //params id로 신청할 게임찾기 -> 최대인원수 다 찼는지 확인 -> 신청자 본인 id와 게임id로 reservation 에 추가
+    //params id로 신청할 게임찾기 -> 최대인원수 다 찼는지 확인 -> 신청자 본인 id와 게임id로 reservation 에 추가 -> 해당 게임 인원수 올리기
     const game = await Game.findOne({
       where: { id: req.params.id },
       include: [
