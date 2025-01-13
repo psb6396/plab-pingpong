@@ -64,7 +64,6 @@ const Profile = () => {
     },
     [dispatch]
   )
-  console.log(games)
   return (
     <>
       {user && (
@@ -76,7 +75,7 @@ const Profile = () => {
             spacing={2}
             style={{ marginTop: 20, padding: '0 20px' }}
           >
-            <Grid item xs={12} sm={4} style={{ textAlign: 'center' }}>
+            <Grid item='true' xs={12} sm={4} style={{ textAlign: 'center' }}>
               <Avatar style={{ width: 100, height: 100, margin: '0 auto' }} />
               <Typography variant='h6' style={{ marginTop: 10 }}>
                 이름: {user.nick}
@@ -120,7 +119,7 @@ const Profile = () => {
                         alignItems='center'
                         style={{ marginTop: 10 }}
                       >
-                        <Grid item xs={2}>
+                        <Grid item='true' xs={2}>
                           <Typography variant='body1'>
                             {`${new Date(game.datetime).getFullYear()}년 ${
                               new Date(game.datetime).getMonth() + 1
@@ -135,18 +134,18 @@ const Profile = () => {
                             {new Date(game.datetime).toLocaleDateString()} */}
                           </Typography>
                         </Grid>
-                        <Grid item xs={8}>
+                        <Grid item='true' xs={8}>
                           <Typography variant='body1'>
                             {game.Gym.name}
                           </Typography>
                         </Grid>
-                        <Grid item xs={8}>
+                        <Grid item='true' xs={8}>
                           <Typography variant='body1'>
                             주소 : {game.Gym.address}
                           </Typography>
                         </Grid>
                         <Grid
-                          item
+                          item='true'
                           xs={2}
                           style={{ textAlign: 'right', marginBottom: 10 }}
                         >
@@ -157,7 +156,7 @@ const Profile = () => {
                           </Link>
                         </Grid>
                         <Grid
-                          item
+                          item='true'
                           xs={2}
                           style={{ textAlign: 'right', marginBottom: 10 }}
                         >

@@ -29,6 +29,7 @@ router.post('/', isManager, async (req, res) => {
       minimumPeople: req.body.minPeople,
       managerId: req.user.id,
       gymId: gymId,
+      currentPeople: 0,
     })
     //성공 응답 반환
     res.status(201).json({

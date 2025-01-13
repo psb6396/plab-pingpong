@@ -17,7 +17,7 @@ const GameCreatePage = () => {
       dispatch(createGameThunk(gamedata))
         .unwrap()
         .then(() => {
-          // window.location.href = '/profile' //페이지 이동 -> 전체 페이지 새로고침
+          window.location.href = '/profile' //페이지 이동 -> 전체 페이지 새로고침
         })
         .catch((error) => {
           console.error('게임매치 등록 에러:', error)
