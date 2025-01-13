@@ -1,6 +1,7 @@
 const express = require('express')
 const path = require('path')
-const { Game, Gym, User } = require('../models')
+const { Game, Gym, User, sequelize } = require('../models')
+const Reservation = sequelize.models.Reservation
 const { isLoggedIn, isManager } = require('./middlewares')
 const router = express.Router()
 
@@ -168,10 +169,8 @@ router.get('/:id', isLoggedIn, async (req, res) => {
         .status(404)
         .json({ success: false, message: '게임을 찾을 수 없습니다.' })
     }
-    console.log('isodatetime:', game.datetime)
+
     const jsgamedate = new Date(game.datetime)
-    // const jsgamedate = jsgamedate.toString()
-    console.log('jsdatetime:', jsgamedate)
 
     res.json({
       success: true,
@@ -217,6 +216,27 @@ router.delete('/:id', isManager, async (req, res) => {
       error,
     })
   }
+})
+
+//게임에 참가 신청하기
+router.post('/:id', isLoggedIn, async (req, res) => {
+  try {
+    //params id로 신청할 게임찾기 -> 최대인원수 다 찼는지 확인 -> 신청자 본인 id와 게임id로 reservation 에 추가
+    const game = await Game.findOne({
+      where: { id: req.params.id },
+      include: [
+        {
+          model: Gym,
+          attributes: ['name', 'address'],
+        },
+      ],
+    })
+    if (!game) {
+      return res
+        .status(404)
+        .json({ success: false, message: '게임을 찾을 수 없습니다.' })
+    }
+  } catch (error) {}
 })
 
 module.exports = router
