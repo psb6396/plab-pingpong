@@ -26,6 +26,6 @@ module.exports = class Gym extends Sequelize.Model {
     )
   }
   static associate(db) {
-    db.Gym.hasMany(db.Game)
+    db.Gym.hasMany(db.Game, { foreignKey: 'gymId' })
   }
 }

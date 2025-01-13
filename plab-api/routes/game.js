@@ -12,8 +12,6 @@ router.post('/', isManager, async (req, res) => {
     const originalDateObject = new Date(req.body.date) // Parse the date string into a Date object
     originalDateObject.setHours(req.body.time) // Set the hour value dynamically
     const datetime = originalDateObject
-    console.log('datetime:', datetime)
-    console.log('datetime.toString():', datetime.toString())
     //입력받은 조건들로 같은 시간대에 매니저본인의 매칭예약이 존재하는지 확인, (체육관 겹치는지는 확인 안됨.)
     const exGame = await Game.findOne({
       where: { datetime: datetime, managerId: req.user.id }, //manager_id도 넣어줘야함.
@@ -27,8 +25,8 @@ router.post('/', isManager, async (req, res) => {
     }
     const newGame = await Game.create({
       datetime: datetime,
-      maximum_people: req.body.maxPeople,
-      minimum_people: req.body.minPeople,
+      maximumPeople: req.body.maxPeople,
+      minimumPeople: req.body.minPeople,
       managerId: req.user.id,
       GymId: gymId,
     })

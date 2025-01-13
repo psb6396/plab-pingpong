@@ -8,11 +8,15 @@ module.exports = class Game extends Sequelize.Model {
           type: Sequelize.DATE,
           allowNull: false,
         },
-        maximum_people: {
+        maximumPeople: {
           type: Sequelize.INTEGER,
           allowNull: false,
         },
-        minimum_people: {
+        minimumPeople: {
+          type: Sequelize.INTEGER,
+          allowNull: false,
+        },
+        currentPeople: {
           type: Sequelize.INTEGER,
           allowNull: false,
         },
@@ -34,6 +38,6 @@ module.exports = class Game extends Sequelize.Model {
     db.Game.belongsTo(db.User, {
       foreignKey: 'managerId',
     })
-    db.Game.belongsTo(db.Gym)
+    db.Game.belongsTo(db.Gym, { foreignKey: 'gymId' })
   }
 }
