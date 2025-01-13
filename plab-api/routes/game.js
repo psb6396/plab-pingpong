@@ -28,20 +28,13 @@ router.post('/', isManager, async (req, res) => {
       maximumPeople: req.body.maxPeople,
       minimumPeople: req.body.minPeople,
       managerId: req.user.id,
-      GymId: gymId,
+      gymId: gymId,
     })
     //성공 응답 반환
     res.status(201).json({
       success: true,
       message: '매칭예약이 성공적으로 등록되었습니다.',
-      game: {
-        id: newGame.id,
-        datetime: newGame.datetime,
-        maximum_people: newGame.maximum_people,
-        minimum_people: newGame.minimum_people,
-        managerId: newGame.managerId,
-        GymId: newGame.GymId,
-      },
+      game: newGame,
     })
   } catch (error) {
     console.error(error)
@@ -83,8 +76,8 @@ router.put('/:id', isManager, async (req, res) => {
     await originalGame.update({
       gymId: req.body.gymId,
       datetime: datetime,
-      maximum_people: req.body.maxPeople,
-      minimum_people: req.body.minPeople,
+      maximumPeople: req.body.maxPeople,
+      minimumPeople: req.body.minPeople,
     })
 
     //업데이트 된 게임 다시 조회
