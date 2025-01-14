@@ -112,7 +112,7 @@ const Profile = () => {
                 <>
                   {games.map((game) => (
                     <>
-                      <Divider />
+                      <Divider key={game.id} />
                       <Grid
                         container
                         spacing={2}

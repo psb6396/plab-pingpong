@@ -3,6 +3,7 @@ const path = require('path')
 const { Game, Gym, User, sequelize } = require('../models')
 const Reservation = sequelize.models.Reservation
 const { isLoggedIn, isManager } = require('./middlewares')
+const { getMaxListeners } = require('events')
 const router = express.Router()
 
 //게임 등록 localhost:8000/game
@@ -213,7 +214,7 @@ router.delete('/:id', isManager, async (req, res) => {
 //게임에 참가 신청하기
 router.post('/:id', isLoggedIn, async (req, res) => {
   try {
-    //params id로 신청할 게임찾기 -> 최대인원수 다 찼는지 확인 -> 신청자 본인 id와 게임id로 reservation 에 추가 -> 해당 게임 인원수 올리기
+    //params id로 신청할 게임찾기(o) -> 최대인원수 다 찼는지 확인(o) -> 본인이 이미 참가된 게임인지 확인하기 -> 본인이 예약한 매치중에 중복된 시간은 없는지 확인 -> 신청자 본인 id와 게임id로 reservation 에 추가 -> 해당 게임 인원수 1 올리기
     const game = await Game.findOne({
       where: { id: req.params.id },
       include: [
@@ -228,6 +229,16 @@ router.post('/:id', isLoggedIn, async (req, res) => {
         .status(404)
         .json({ success: false, message: '게임을 찾을 수 없습니다.' })
     }
+    if (game.currentPeople === game.maximumPeople) {
+      return res.status(404).json({
+        success: false,
+        message: '게임 인원이 다 찼습니다. 신청이 불가능합니다.',
+      })
+    }
+    const reservation = await Reservation.create({
+      UserId: req.user.id,
+      GameId: game.id,
+    })
   } catch (error) {}
 })
 
