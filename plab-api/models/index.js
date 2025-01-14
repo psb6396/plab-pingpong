@@ -5,9 +5,15 @@ const config = require('../config/config.json')[env]
 const User = require('./user')
 const Game = require('./game')
 const Gym = require('./gym')
+// const Reservation = sequelize.models.R
 
 const db = {}
-const sequelize = new Sequelize(config.database, config.username, config.password, config)
+const sequelize = new Sequelize(
+  config.database,
+  config.username,
+  config.password,
+  config
+)
 
 db.sequelize = sequelize
 
