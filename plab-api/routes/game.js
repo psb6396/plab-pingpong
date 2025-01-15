@@ -148,8 +148,6 @@ router.get('/created', isLoggedIn, async (req, res) => {
 //특정 게임 불러오기(id로 게임 조회)
 router.get('/:id', isLoggedIn, async (req, res) => {
   try {
-    console.log('@@@@@@@@@@@@@@@reservation:', Reservation.rawAttributes)
-    console.log('@@@@@@@@@@@@@@@gym:', Gym.rawAttributes)
     const game = await Game.findOne({
       where: { id: req.params.id },
       include: [
@@ -214,44 +212,44 @@ router.delete('/:id', isManager, async (req, res) => {
 })
 
 //게임에 참가 신청하기
-// router.post('/:id', isLoggedIn, async (req, res) => {
-//   try {
-//     //params id로 신청할 게임찾기(o) -> 최대인원수 다 찼는지 확인(o) -> 본인이 이미 참가된 게임인지 확인하기(o) -> 본인이 예약한 매치중에 중복된 시간은 없는지 확인 -> 신청자 본인 id와 게임id로 reservation 에 추가 -> 해당 게임 인원수 1 올리기
-//     const game = await Game.findOne({
-//       where: { id: req.params.id },
-//       include: [
-//         {
-//           model: Gym,
-//           attributes: ['name', 'address'],
-//         },
-//       ],
-//     })
-//     if (!game) {
-//       return res
-//         .status(404)
-//         .json({ success: false, message: '게임을 찾을 수 없습니다.' })
-//     }
-//     if (game.currentPeople === game.maximumPeople) {
-//       return res.status(404).json({
-//         success: false,
-//         message: '게임 인원이 다 찼습니다. 신청이 불가능합니다.',
-//       })
-//     }
-//     const existingReservation = await Reservation.findAll({
-//       where: { UserId: req.user.id, GameId: game.id },
-//     })
-//     if (existingReservation.length !== 0) {
-//       return res.status(404).json({
-//         success: false,
-//         message: '선택된 게임에 이미 참가 된 상태입니다.',
-//       })
-//     }
-//     const reservation = await Reservation.create({
-//       UserId: req.user.id,
-//       GameId: game.id,
-//     })
+router.post('/:id', isLoggedIn, async (req, res) => {
+  try {
+    //params id로 신청할 게임찾기(o) -> 최대인원수 다 찼는지 확인(o) -> 본인이 이미 참가된 게임인지 확인하기(o) -> 본인이 예약한 매치중에 중복된 시간은 없는지 확인 -> 신청자 본인 id와 게임id로 reservation 에 추가 -> 해당 게임 인원수 1 올리기
+    const game = await Game.findOne({
+      where: { id: req.params.id },
+      include: [
+        {
+          model: Gym,
+          attributes: ['name', 'address'],
+        },
+      ],
+    })
+    if (!game) {
+      return res
+        .status(404)
+        .json({ success: false, message: '게임을 찾을 수 없습니다.' })
+    }
+    if (game.currentPeople === game.maximumPeople) {
+      return res.status(404).json({
+        success: false,
+        message: '게임 인원이 다 찼습니다. 신청이 불가능합니다.',
+      })
+    }
+    const sameReservation = await Reservation.findAll({
+      where: { UserId: req.user.id, GameId: game.id },
+    })
+    if (sameReservation.length !== 0) {
+      return res.status(404).json({
+        success: false,
+        message: '선택된 게임에 이미 참가 된 상태입니다.',
+      })
+    }
 
-//   } catch (error) {}
-// })
+    const reservation = await Reservation.create({
+      UserId: req.user.id,
+      GameId: game.id,
+    })
+  } catch (error) {}
+})
 
 module.exports = router

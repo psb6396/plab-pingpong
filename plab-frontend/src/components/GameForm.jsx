@@ -23,7 +23,7 @@ const GameForm = ({ onSubmit, initialGame = {} }) => {
     dispatch(fetchGymsThunk())
   }, [dispatch])
   const [selectedGymId, setSelectedGymId] = useState(
-    initialGame ? initialGame.GymId : null
+    initialGame ? initialGame.GymId : ''
   )
   const [selectedDate, setSelectedDate] = useState(
     initialGame
@@ -114,7 +114,7 @@ const GameForm = ({ onSubmit, initialGame = {} }) => {
               게임매치 생성
             </Typography>
             <Grid container spacing={2} direction='column'>
-              <Grid item xs={12}>
+              <Grid item='true' xs={12}>
                 <FormControl fullWidth variant='outlined'>
                   <InputLabel>체육관</InputLabel>
                   <Select
@@ -130,7 +130,7 @@ const GameForm = ({ onSubmit, initialGame = {} }) => {
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid item xs={12}>
+              <Grid item='true' xs={12}>
                 <TextField
                   fullWidth
                   label='날짜'
@@ -146,7 +146,7 @@ const GameForm = ({ onSubmit, initialGame = {} }) => {
                   onChange={(e) => setSelectedDate(new Date(e.target.value))}
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item='true' xs={12}>
                 <FormControl fullWidth>
                   <InputLabel id='demo-simple-select-label'>시간</InputLabel>
                   <Select
@@ -165,7 +165,7 @@ const GameForm = ({ onSubmit, initialGame = {} }) => {
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid item xs={12}>
+              <Grid item='true' xs={12}>
                 <TextField
                   fullWidth
                   label='최대 인원'
@@ -180,7 +180,7 @@ const GameForm = ({ onSubmit, initialGame = {} }) => {
                   }}
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item='true' xs={12}>
                 <TextField
                   fullWidth
                   label='최소 인원'
@@ -195,7 +195,7 @@ const GameForm = ({ onSubmit, initialGame = {} }) => {
                   }}
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item='true' xs={12}>
                 <Button
                   onClick={onClickSubmit}
                   fullWidth
