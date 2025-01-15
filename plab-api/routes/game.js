@@ -4,6 +4,7 @@ const { Game, Gym, User, sequelize } = require('../models')
 const Reservation = sequelize.models.Reservation
 const { isLoggedIn, isManager } = require('./middlewares')
 const { getMaxListeners } = require('events')
+const { where } = require('sequelize')
 const router = express.Router()
 
 //게임 등록 localhost:8000/game
@@ -244,7 +245,19 @@ router.post('/:id', isLoggedIn, async (req, res) => {
         message: '선택된 게임에 이미 참가 된 상태입니다.',
       })
     }
-
+    const sameTimeReservation = await Reservation.findAll({
+      where: { UserId: req.user.id },
+      include: {
+        model: Game,
+        where: { datetime: game.datetime },
+      },
+    })
+    if (sameTimeReservation.length !== 0) {
+      return res.status(404).json({
+        success: false,
+        message: '같은 시간대에 참가처리된 게임이 있습니다.',
+      })
+    }
     const reservation = await Reservation.create({
       UserId: req.user.id,
       GameId: game.id,
