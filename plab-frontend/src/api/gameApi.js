@@ -1,16 +1,5 @@
 import plabApi from './axiosApi'
 
-//내 프로필 가져오기
-export const getProfile = async () => {
-   try {
-      const response = await plabApi.get(`/page/profile`)
-      return response
-   } catch (error) {
-      console.error(`API Request 오류: ${error.message}`)
-      throw error
-   }
-}
-
 //게임매칭 등록
 export const createGame = async (gameData) => {
    try {
@@ -37,17 +26,6 @@ export const updateGame = async (id, gameData) => {
 export const deleteGame = async (id) => {
    try {
       const response = await plabApi.delete(`/game/${id}`)
-      return response
-   } catch (error) {
-      console.error(`API Request 오류: ${error.message}`)
-      throw error
-   }
-}
-
-//전체 체육관 가져오기
-export const getGyms = async () => {
-   try {
-      const response = await plabApi.get(`/gym`)
       return response
    } catch (error) {
       console.error(`API Request 오류: ${error.message}`)
