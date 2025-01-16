@@ -232,6 +232,8 @@ router.post('/:id', isLoggedIn, async (req, res) => {
             message: '게임 인원이 다 찼습니다. 신청이 불가능합니다.',
          })
       }
+
+      // 신청하려는 게임에 이미 참가 된 상태인지 확인
       const sameReservation = await Reservation.findAll(
          {
             where: { UserId: req.user.id, GameId: game.id },
@@ -244,6 +246,8 @@ router.post('/:id', isLoggedIn, async (req, res) => {
             message: '선택된 게임에 이미 참가 된 상태입니다.',
          })
       }
+
+      // 같은 시간대의 게임에 참가 된 상태인지 확인
       const sameTimeReservation = await Reservation.findAll(
          {
             where: { UserId: req.user.id },
@@ -260,10 +264,18 @@ router.post('/:id', isLoggedIn, async (req, res) => {
             message: '같은 시간대에 참가처리된 게임이 있습니다.',
          })
       }
+
+      // 매칭에 참가
       const reservation = await Reservation.create({
          UserId: req.user.id,
          GameId: game.id,
       })
+
+      //현재 인원수 증가
+      game.currentPeople = game.currentPeople + 1
+
+      //테이블 update
+      await game.save({ transaction })
    } catch (error) {
       await transaction.rollback()
       console.error(error)
