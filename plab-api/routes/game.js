@@ -224,13 +224,10 @@ router.post('/:id', isLoggedIn, async (req, res) => {
          { transaction }
       )
       if (!game) {
-         return res.status(404).json({ success: false, message: '게임을 찾을 수 없습니다.' })
+         throw new Error('게임을 찾을 수 없습니다.')
       }
       if (game.currentPeople === game.maximumPeople) {
-         return res.status(404).json({
-            success: false,
-            message: '게임 인원이 다 찼습니다. 신청이 불가능합니다.',
-         })
+         throw new Error('게임 인원이 다 찼습니다. 신청이 불가능합니다.')
       }
 
       // 신청하려는 게임에 이미 참가 된 상태인지 확인
@@ -241,10 +238,7 @@ router.post('/:id', isLoggedIn, async (req, res) => {
          { transaction }
       )
       if (sameReservation.length !== 0) {
-         return res.status(404).json({
-            success: false,
-            message: '선택된 게임에 이미 참가 된 상태입니다.',
-         })
+         throw new Error('선택된 게임에 이미 참가 된 상태입니다.')
       }
 
       // 같은 시간대의 게임에 참가 된 상태인지 확인
@@ -259,10 +253,7 @@ router.post('/:id', isLoggedIn, async (req, res) => {
          { transaction }
       )
       if (sameTimeReservation.length !== 0) {
-         return res.status(404).json({
-            success: false,
-            message: '같은 시간대에 참가처리된 게임이 있습니다.',
-         })
+         throw new Error('같은 시간대에 참가처리된 게임이 있습니다.')
       }
 
       // 매칭에 참가
