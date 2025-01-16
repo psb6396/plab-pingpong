@@ -257,10 +257,13 @@ router.post('/:id', isLoggedIn, async (req, res) => {
       }
 
       // 매칭에 참가
-      const reservation = await Reservation.create({
-         UserId: req.user.id,
-         GameId: game.id,
-      })
+      const reservation = await Reservation.create(
+         {
+            UserId: req.user.id,
+            GameId: game.id,
+         },
+         { transaction }
+      )
 
       //현재 인원수 증가
       game.currentPeople = game.currentPeople + 1
