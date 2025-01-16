@@ -257,7 +257,7 @@ router.post('/:id', isLoggedIn, async (req, res) => {
       }
 
       // 매칭에 참가
-      const reservation = await Reservation.create(
+      await Reservation.create(
          {
             UserId: req.user.id,
             GameId: game.id,
@@ -270,6 +270,11 @@ router.post('/:id', isLoggedIn, async (req, res) => {
 
       //테이블 update
       await game.save({ transaction })
+
+      res.status(201).json({
+         success: true,
+         message: '참가처리가 성공적으로 되었습니다',
+      })
    } catch (error) {
       await transaction.rollback()
       console.error(error)
