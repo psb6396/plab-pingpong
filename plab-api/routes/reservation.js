@@ -30,17 +30,17 @@ router.post('/:id', isLoggedIn, async (req, res) => {
       }
 
       // 신청하려는 게임에 이미 참가 된 상태인지 확인
-      const sameReservation = await Reservation.findAll(
-         {
-            where: { UserId: req.user.id, GameId: game.id },
-         },
-         { transaction }
-      )
-      if (sameReservation.length !== 0) {
-         throw new Error('선택된 게임에 이미 참가 된 상태입니다.')
-      }
+      // const sameReservation = await Reservation.findAll(
+      //    {
+      //       where: { UserId: req.user.id, GameId: game.id },
+      //    },
+      //    { transaction }
+      // )
+      // if (sameReservation.length !== 0) {
+      //    throw new Error('선택된 게임에 이미 참가 된 상태입니다.')
+      // }
 
-      // 같은 시간대의 게임에 참가 된 상태인지 확인
+      // 같은 시간대의 게임에 참가 된 상태인지 확인(해당게임까지 처리가능)
       const sameTimeReservation = await Reservation.findAll(
          {
             where: { UserId: req.user.id },
@@ -74,6 +74,7 @@ router.post('/:id', isLoggedIn, async (req, res) => {
          success: true,
          message: '참가처리가 성공적으로 되었습니다',
       })
+      await transaction.commit()
    } catch (error) {
       await transaction.rollback()
       console.error(error)
