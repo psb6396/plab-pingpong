@@ -6,31 +6,36 @@ import { useEffect } from 'react'
 import Navbar from './components/Navbar'
 import LoginPage from './pages/LoginPage'
 import SignupPage from './pages/SignupPage'
-import { checkAuthStatusThunk } from './features/authslice'
+import { checkAuthStatusThunk } from './features/authSlice'
 import ProfilePage from './pages/ProfilePage'
 import GameCreatePage from './pages/GameCreatePage'
 import GameEditPage from './pages/GameEditPage'
 
 function App() {
-   const dispatch = useDispatch()
-   const { isAuthenticated, user } = useSelector((state) => state.auth)
+  const dispatch = useDispatch()
+  const { isAuthenticated, user } = useSelector((state) => state.auth)
 
-   useEffect(() => {
-      dispatch(checkAuthStatusThunk())
-   }, [dispatch])
-   return (
-      <>
-         <Navbar isAuthenticated={isAuthenticated} user={user} />
-         <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/signup" element={<SignupPage />} />
-            <Route path="/profile" element={<ProfilePage isAuthenticated={isAuthenticated} user={user} />} />
-            <Route path="/gamecreate" element={<GameCreatePage />} />
-            <Route path="/game/edit/:id" element={<GameEditPage />} />
-         </Routes>
-      </>
-   )
+  useEffect(() => {
+    dispatch(checkAuthStatusThunk())
+  }, [dispatch])
+  return (
+    <>
+      <Navbar isAuthenticated={isAuthenticated} user={user} />
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/login' element={<LoginPage />} />
+        <Route path='/signup' element={<SignupPage />} />
+        <Route
+          path='/profile'
+          element={
+            <ProfilePage isAuthenticated={isAuthenticated} user={user} />
+          }
+        />
+        <Route path='/gamecreate' element={<GameCreatePage />} />
+        <Route path='/game/edit/:id' element={<GameEditPage />} />
+      </Routes>
+    </>
+  )
 }
 
 export default App
