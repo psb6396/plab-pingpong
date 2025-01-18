@@ -176,6 +176,15 @@ router.get('/:id', isLoggedIn, async (req, res) => {
    }
 })
 
+//모든 게임 불러오기
+router.get('/', async (req, res) => {
+   try {
+      games = Game.findAll({
+         order: [['createdAt', 'DESC']], // 최신날짜 순으로 가져온다
+      })
+   } catch (error) {}
+})
+
 //게임삭제 localhost:8000/game/:id
 router.delete('/:id', isManager, async (req, res) => {
    try {

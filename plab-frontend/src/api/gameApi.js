@@ -55,3 +55,8 @@ export const getGameById = async (id) => {
       throw error
    }
 }
+
+//모든 게임 가져오기
+// export const getAllGames = async (id) => {
+//    try
+// }
