@@ -59,6 +59,7 @@ const Home = ({ isAuthenticated = {}, user = {} }) => {
               {games.map((game) => (
                 <>
                   <Divider key={game.id} />
+                  <Link to={`/game/detail/${game.id}`}></Link>
                   <Grid
                     container
                     spacing={6}

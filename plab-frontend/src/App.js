@@ -10,6 +10,7 @@ import { checkAuthStatusThunk } from './features/authSlice'
 import ProfilePage from './pages/ProfilePage'
 import GameCreatePage from './pages/GameCreatePage'
 import GameEditPage from './pages/GameEditPage'
+import GameDetailPage from './pages/GameDetailPage'
 
 function App() {
   const dispatch = useDispatch()
@@ -33,6 +34,7 @@ function App() {
         />
         <Route path='/gamecreate' element={<GameCreatePage />} />
         <Route path='/game/edit/:id' element={<GameEditPage />} />
+        <Route path='/game/detail/:id' element={<GameDetailPage />} />
       </Routes>
     </>
   )
