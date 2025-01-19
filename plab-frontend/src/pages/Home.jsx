@@ -61,9 +61,10 @@ const Home = ({ isAuthenticated = {}, user = {} }) => {
                   <Divider key={game.id} />
                   <Grid
                     container
-                    spacing={2}
+                    spacing={6}
                     alignItems='center'
-                    style={{ marginTop: 10 }}
+                    justifyContent='center'
+                    sx={{ my: 3 }}
                   >
                     <Grid item='true' xs={2}>
                       <Typography variant='body1'>
@@ -81,30 +82,6 @@ const Home = ({ isAuthenticated = {}, user = {} }) => {
                       <Typography variant='body1'>
                         주소 : {game.Gym.address}
                       </Typography>
-                    </Grid>
-                    <Grid
-                      item='true'
-                      xs={2}
-                      style={{ textAlign: 'right', marginBottom: 10 }}
-                    >
-                      <Link to={`/game/edit/${game.id}`}>
-                        <Button variant='outlined' color='primary'>
-                          수정하기
-                        </Button>
-                      </Link>
-                    </Grid>
-                    <Grid
-                      item='true'
-                      xs={2}
-                      style={{ textAlign: 'right', marginBottom: 10 }}
-                    >
-                      <Button
-                        variant='outlined'
-                        color='error'
-                        // onClick={() => onClickDelete(game.id)}
-                      >
-                        게임 삭제
-                      </Button>
                     </Grid>
                   </Grid>
                 </>
