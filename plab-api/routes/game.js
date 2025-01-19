@@ -170,13 +170,13 @@ router.get('/:id', isLoggedIn, async (req, res) => {
       success: true,
       game,
       jsgamedate,
-      message: '게시물을 성공적으로 불러왔습니다.',
+      message: '특정 게임을 성공적으로 불러왔습니다.',
     })
   } catch (error) {
     console.error(error)
     res.status(500).json({
       success: false,
-      message: '게임을 불러오는 중 오류가 발생했습니다.',
+      message: '특정 게임을 불러오는 중 오류가 발생했습니다.',
       error,
     })
   }
@@ -185,10 +185,22 @@ router.get('/:id', isLoggedIn, async (req, res) => {
 //모든 게임 불러오기
 router.get('/', async (req, res) => {
   try {
-    games = Game.findAll({
-      order: [['createdAt', 'DESC']], // 최신날짜 순으로 가져온다
+    const games = Game.findAll({
+      order: [['createdAt', 'DESC']], // 옛날날짜 순으로 가져온다
     })
-  } catch (error) {}
+    res.json({
+      success: true,
+      message: '모든 게임을 성공적으로 불러왔습니다.',
+      games,
+    })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({
+      success: false,
+      message: '모든 게임을 불러오는 중 오류가 발생했습니다.',
+      error,
+    })
+  }
 })
 
 //게임삭제 localhost:8000/game/:id
