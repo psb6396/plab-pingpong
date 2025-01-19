@@ -77,7 +77,7 @@ export const fetchGameByIdThunk = createAsyncThunk(
       return response.data
     } catch (error) {
       return rejectWithValue(
-        error.response?.data?.message || '게시물 불러오기 실패'
+        error.response?.data?.message || '특정게임 불러오기 실패'
       )
     }
   }
@@ -86,13 +86,13 @@ export const fetchGameByIdThunk = createAsyncThunk(
 //모든 게임 가져오기
 export const fetchGamesThunk = createAsyncThunk(
   'games/fetchGames',
-  async (id, { rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
-      const response = await getAllGames(id)
+      const response = await getAllGames()
       return response.data
     } catch (error) {
       return rejectWithValue(
-        error.response?.data?.message || '게시물 불러오기 실패'
+        error.response?.data?.message || '모든게임 불러오기 실패'
       )
     }
   }

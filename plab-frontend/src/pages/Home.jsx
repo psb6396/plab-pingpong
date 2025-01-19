@@ -1,16 +1,36 @@
-import { Container, Typography, Pagination, Stack, styled } from '@mui/material'
+import {
+  Container,
+  Typography,
+  Button,
+  Avatar,
+  Card,
+  CardContent,
+  Divider,
+  IconButton,
+} from '@mui/material'
+import Grid from '@mui/material/Grid2'
+import { Link } from 'react-router-dom'
+
 import { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchGamesThunk } from '../features/gameSlice'
 
 const Home = ({ isAuthenticated = {}, user = {} }) => {
   //생성된 게임 전체 fetch 할 예정 ㅇㅇㅇ
+  const dispatch = useDispatch()
+  const { games, loading, error } = useSelector((state) => state.games)
 
+  useEffect(() => {
+    dispatch(fetchGamesThunk())
+  }, [dispatch])
+  console.log('games:', games)
   return (
-    <Container maxWidth='xs'>
-      <div>
-        <img src='./images/pingpong.jpg' alt='pingpong' />
-      </div>
+    <>
+      <Container maxWidth='xs'>
+        <div>
+          <img src='./images/pingpong.jpg' alt='pingpong' />
+        </div>
+      </Container>
       {/* Application List */}
       <Card style={{ margin: '20px', padding: '10px' }}>
         <CardContent>
@@ -81,7 +101,7 @@ const Home = ({ isAuthenticated = {}, user = {} }) => {
                       <Button
                         variant='outlined'
                         color='error'
-                        onClick={() => onClickDelete(game.id)}
+                        // onClick={() => onClickDelete(game.id)}
                       >
                         게임 삭제
                       </Button>
@@ -96,7 +116,7 @@ const Home = ({ isAuthenticated = {}, user = {} }) => {
           )}
         </CardContent>
       </Card>
-    </Container>
+    </>
   )
 }
 

@@ -185,7 +185,14 @@ router.get('/:id', isLoggedIn, async (req, res) => {
 //모든 게임 불러오기
 router.get('/', async (req, res) => {
   try {
-    const games = Game.findAll({
+    console.log('룰루랄라')
+    const games = await Game.findAll({
+      include: [
+        {
+          model: Gym,
+          attributes: ['name', 'address'],
+        },
+      ],
       order: [['createdAt', 'DESC']], // 옛날날짜 순으로 가져온다
     })
     res.json({
