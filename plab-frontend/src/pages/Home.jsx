@@ -59,32 +59,33 @@ const Home = ({ isAuthenticated = {}, user = {} }) => {
               {games.map((game) => (
                 <>
                   <Divider key={game.id} />
-                  <Link to={`/game/detail/${game.id}`}></Link>
-                  <Grid
-                    container
-                    spacing={6}
-                    alignItems='center'
-                    justifyContent='center'
-                    sx={{ my: 3 }}
-                  >
-                    <Grid item='true' xs={2}>
-                      <Typography variant='body1'>
-                        {`${new Date(game.datetime).getFullYear()}년 ${
-                          new Date(game.datetime).getMonth() + 1
-                        }월 ${new Date(game.datetime).getDate()}일 ${new Date(
-                          game.datetime
-                        ).getHours()}시`}
-                      </Typography>
+                  <Link to={`/game/detail/${game.id}`}>
+                    <Grid
+                      container
+                      spacing={6}
+                      alignItems='center'
+                      justifyContent='center'
+                      sx={{ my: 3 }}
+                    >
+                      <Grid item='true' xs={2}>
+                        <Typography variant='body1'>
+                          {`${new Date(game.datetime).getFullYear()}년 ${
+                            new Date(game.datetime).getMonth() + 1
+                          }월 ${new Date(game.datetime).getDate()}일 ${new Date(
+                            game.datetime
+                          ).getHours()}시`}
+                        </Typography>
+                      </Grid>
+                      <Grid item='true' xs={8}>
+                        <Typography variant='body1'>{game.Gym.name}</Typography>
+                      </Grid>
+                      <Grid item='true' xs={8}>
+                        <Typography variant='body1'>
+                          주소 : {game.Gym.address}
+                        </Typography>
+                      </Grid>
                     </Grid>
-                    <Grid item='true' xs={8}>
-                      <Typography variant='body1'>{game.Gym.name}</Typography>
-                    </Grid>
-                    <Grid item='true' xs={8}>
-                      <Typography variant='body1'>
-                        주소 : {game.Gym.address}
-                      </Typography>
-                    </Grid>
-                  </Grid>
+                  </Link>
                 </>
               ))}
               <Divider />
