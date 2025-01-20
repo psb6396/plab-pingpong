@@ -15,9 +15,11 @@ const GameDetailPage = ({ user }) => {
       dispatch(fetchGameByIdThunk(id))
    }, [dispatch, id])
 
+   if (loading) return <p>로딩중</p>
+   if (error) return <p>에러발생: {error}</p>
    return (
       <>
-         <GameDetail user={user} />
+         <GameDetail user={user} game={game} />
       </>
    )
 }

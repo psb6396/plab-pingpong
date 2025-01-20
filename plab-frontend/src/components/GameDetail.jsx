@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box, Button, Typography, AppBar, Toolbar, Container, Paper, List, ListItem } from '@mui/material'
 
-const GameDetail = ({ user }) => {
+const GameDetail = ({ user = {}, game = {} }) => {
    return (
       <Box>
          {/* Main Content */}
