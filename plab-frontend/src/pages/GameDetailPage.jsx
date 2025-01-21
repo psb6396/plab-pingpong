@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-// import { Box, Button, Typography, AppBar, Toolbar, Container, Paper, List, ListItem } from '@mui/material'
+
 import GameDetail from '../components/GameDetail'
 import { useParams } from 'react-router-dom'
 import { fetchGameByIdThunk } from '../features/gameSlice'
@@ -13,7 +13,7 @@ const GameDetailPage = ({ user }) => {
 
    useEffect(() => {
       dispatch(fetchGameByIdThunk(id))
-   }, [dispatch, id, game])
+   }, [dispatch, id])
 
    console.log(game)
 
