@@ -2,19 +2,20 @@ import React from 'react'
 import { Box, Button, Typography, AppBar, Toolbar, Container, Paper, List, ListItem } from '@mui/material'
 
 const GameDetail = ({ user = {}, game = {} }) => {
+   console.log(game)
    return (
       <Box>
          {/* Main Content */}
          <Container maxWidth="sm">
             <Paper elevation={3} sx={{ p: 3, mb: 3 }}>
                <Typography variant="h6" gutterBottom>
-                  체육관 : 인천 어디더 체육관
+                  체육관 : {game.Gym.name}
                </Typography>
                <Typography variant="body1" gutterBottom>
-                  날짜 및 시간 : <strong>2024-12-23 - 18:00</strong>
+                  날짜 및 시간 : <strong>{`${new Date(game.datetime).getFullYear()}년 ${new Date(game.datetime).getMonth() + 1}월 ${new Date(game.datetime).getDate()}일 ${new Date(game.datetime).getHours()}시`}</strong>
                </Typography>
                <Typography variant="body1" gutterBottom>
-                  인원 : 3 / 8
+                  인원 : {game.currentPeople} / {game.maximumPeople}
                </Typography>
                <Typography variant="subtitle1" gutterBottom>
                   &lt;참가 인원 정보&gt;

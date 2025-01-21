@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Box, Button, Typography, AppBar, Toolbar, Container, Paper, List, ListItem } from '@mui/material'
+// import { Box, Button, Typography, AppBar, Toolbar, Container, Paper, List, ListItem } from '@mui/material'
 import GameDetail from '../components/GameDetail'
 import { useParams } from 'react-router-dom'
 import { fetchGameByIdThunk } from '../features/gameSlice'
@@ -13,12 +13,15 @@ const GameDetailPage = ({ user }) => {
 
    useEffect(() => {
       dispatch(fetchGameByIdThunk(id))
-   }, [dispatch, id])
+   }, [dispatch, id, game])
+
+   console.log(game)
 
    if (loading) return <p>로딩중</p>
    if (error) return <p>에러발생: {error}</p>
    return (
       <>
+         {console.log(game)}
          <GameDetail user={user} game={game} />
       </>
    )
