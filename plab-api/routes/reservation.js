@@ -30,7 +30,7 @@ router.post('/:id', isLoggedIn, async (req, res) => {
          throw new Error('게임 인원이 다 찼습니다. 신청이 불가능합니다.')
       }
 
-      if//매니저
+      // if//매니저
 
       // 같은 시간대의 게임에 참가 된 상태인지 확인(해당게임까지 처리가능)
       const sameTimeReservation = await Reservation.findAll(
