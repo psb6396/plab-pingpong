@@ -1,6 +1,6 @@
 import plabApi from './axiosApi'
 
-//게임 삭제
+//게임 참가
 export const applyGame = async (id) => {
   try {
     const response = await plabApi.post(`/reservation/${id}`)
