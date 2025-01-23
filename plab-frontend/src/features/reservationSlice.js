@@ -2,13 +2,13 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
 import { applyGame } from '../api/reservationApi'
 
-//특정 게임 가져오기
+//게임 참가하기
 export const applyGameThunk = createAsyncThunk('reservations/applygame', async (gameId, { rejectWithValue }) => {
    try {
       const response = await applyGame(gameId)
       return response.data
    } catch (error) {
-      return rejectWithValue(error.response?.data?.message || '게시물 불러오기 실패')
+      return rejectWithValue(error.response?.data?.message || '게임 참가 실패')
    }
 })
 

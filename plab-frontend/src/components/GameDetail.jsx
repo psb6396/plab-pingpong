@@ -1,4 +1,6 @@
 import React, { useCallback } from 'react'
+import { useDispatch } from 'react-redux'
+
 import { Box, Button, Typography, AppBar, Toolbar, Container, Paper, List, ListItem } from '@mui/material'
 import { applyGameThunk } from '../features/reservationSlice'
 
