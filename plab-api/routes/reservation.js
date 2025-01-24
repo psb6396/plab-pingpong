@@ -1,7 +1,6 @@
 const express = require('express')
 const path = require('path')
-const { Game, Gym, User, sequelize } = require('../models')
-const Reservation = sequelize.models.Reservation
+const { Game, Gym, User, Reservation } = require('../models')
 const { isLoggedIn, isManager } = require('./middlewares')
 const router = express.Router()
 
