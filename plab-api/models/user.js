@@ -41,4 +41,3 @@ module.exports = class User extends Sequelize.Model {
     db.User.hasMany(db.SocialAccount, { foreignKey: 'userId' })
   }
 }
-// asdf

@@ -1,6 +1,7 @@
 const passport = require('passport')
 const GoogleStrategy = require('passport-google-oauth20').Strategy
 const User = require('../models/user')
+const SocialAccount = require('../models/socialAccount')
 
 // Google OAuth Strategy
 passport.use(
@@ -14,8 +15,7 @@ passport.use(
       // Handle user profile here (e.g., save to database)
       try {
         console.log('google profile : ', profile)
-
-        return done(null, profile)
+        const exUser = await SocialAccount.findOne({})
       } catch (error) {}
     }
   )
