@@ -15,7 +15,9 @@ passport.use(
       // Handle user profile here (e.g., save to database)
       try {
         console.log('google profile : ', profile)
-        const exUser = await SocialAccount.findOne({})
+        const exUser = await SocialAccount.findOne({
+          where: {},
+        })
       } catch (error) {}
     }
   )

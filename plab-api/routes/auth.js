@@ -113,7 +113,7 @@ router.get(
   passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) => {
     // Successful authentication, redirect home.
-    res.redirect('/profile')
+    res.redirect('/profile') // 여기도 나중에 손봐줘야할 듯
   }
 )
 

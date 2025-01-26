@@ -4,6 +4,10 @@ module.exports = class SocialAccount extends Sequelize.Model {
   static init(sequelize) {
     return super.init(
       {
+        snsId: {
+          type: Sequelize.STRING(500),
+          allowNull: false,
+        },
         accountEmail: {
           type: Sequelize.STRING(500),
           allowNull: false,
