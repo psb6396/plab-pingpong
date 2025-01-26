@@ -10,9 +10,13 @@ passport.use(
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: '/auth/google/callback',
     },
-    (accessToken, refreshToken, profile, done) => {
+    async (accessToken, refreshToken, profile, done) => {
       // Handle user profile here (e.g., save to database)
-      return done(null, profile)
+      try {
+        console.log('google profile : ', profile)
+
+        return done(null, profile)
+      } catch (error) {}
     }
   )
 )

@@ -1,12 +1,12 @@
-const express = require("express")
-const passport = require("passport")
+const express = require('express')
+const passport = require('passport')
 const router = express.Router()
-const bcrypt = require("bcrypt")
-const { isLoggedIn, isNotLoggedIn } = require("./middlewares")
-const User = require("../models/user")
+const bcrypt = require('bcrypt')
+const { isLoggedIn, isNotLoggedIn } = require('./middlewares')
+const User = require('../models/user')
 
 //회원가입 localhost:8000/auth/join
-router.post("/join", isNotLoggedIn, async (req, res, next) => {
+router.post('/join', isNotLoggedIn, async (req, res, next) => {
   const { email, nick, password, managerChecked } = req.body
   try {
     //이메일로 기존 사용자 검색
@@ -15,7 +15,7 @@ router.post("/join", isNotLoggedIn, async (req, res, next) => {
       //이미 사용자가 존재할 경우 409상태코드와 메세지를 json객체로 응답
       return res.status(409).json({
         success: false,
-        message: "이미 존재하는 사용자입니다.",
+        message: '이미 존재하는 사용자입니다.',
       })
     }
     //이메일 중복 확인을 통과시 새로운 사용자 계정 생성
@@ -27,20 +27,20 @@ router.post("/join", isNotLoggedIn, async (req, res, next) => {
         email: email,
         nick: nick,
         password: hash,
-        role: "MANAGER",
+        role: 'MANAGER',
       })
     } else if (managerChecked === false) {
       newUser = await User.create({
         email: email,
         nick: nick,
         password: hash,
-        role: "PLAYER",
+        role: 'PLAYER',
       })
     }
     //성공 응답 반환
     res.status(201).json({
       success: true,
-      message: "사용자가 성공적으로 등록되었습니다.",
+      message: '사용자가 성공적으로 등록되었습니다.',
       user: {
         id: newUser.id,
         email: newUser.email,
@@ -52,20 +52,20 @@ router.post("/join", isNotLoggedIn, async (req, res, next) => {
     console.error(error)
     res.status(500).json({
       success: false,
-      message: "회원가입중 오류가 발생했습니다.",
+      message: '회원가입중 오류가 발생했습니다.',
       error,
     })
   }
 })
 
 //로그인 localhost:8000/auth/login
-router.post("/login", isNotLoggedIn, async (req, res, next) => {
-  passport.authenticate("local", (authError, user, info) => {
+router.post('/login', isNotLoggedIn, async (req, res, next) => {
+  passport.authenticate('local', (authError, user, info) => {
     if (authError) {
       //로그인 인증 중 에러 발생시
       return res.status(500).json({
         success: false,
-        message: "인증 중 오류 발생",
+        message: '인증 중 오류 발생',
         error: authError,
       })
     }
@@ -73,7 +73,7 @@ router.post("/login", isNotLoggedIn, async (req, res, next) => {
       //비밀번호 불일치 또는 사용자가 없을 경우 info.message를 사용해서 메세지 전달
       return res.status(401).json({
         success: false,
-        message: info.message || "로그인 실패",
+        message: info.message || '로그인 실패',
       })
     }
 
@@ -83,7 +83,7 @@ router.post("/login", isNotLoggedIn, async (req, res, next) => {
         // 로그인 상태로 바꾸는 중 오류 발생시
         return res.status(500).json({
           success: false,
-          message: "로그인 중 오류 발생",
+          message: '로그인 중 오류 발생',
           error: loginError,
         })
       }
@@ -92,7 +92,7 @@ router.post("/login", isNotLoggedIn, async (req, res, next) => {
       //status code를 주지 않으면 기본값은 200
       res.json({
         success: true,
-        message: "로그인 성공",
+        message: '로그인 성공',
         user: {
           id: user.id,
           nick: user.nick,
@@ -102,8 +102,23 @@ router.post("/login", isNotLoggedIn, async (req, res, next) => {
   })(req, res, next)
 })
 
+//구글로그인 연동 시작버튼
+router.get(
+  '/google',
+  passport.authenticate('google', { scope: ['profile', 'email'] })
+)
+
+router.get(
+  '/google/callback',
+  passport.authenticate('google', { failureRedirect: '/' }),
+  (req, res) => {
+    // Successful authentication, redirect home.
+    res.redirect('/profile')
+  }
+)
+
 //로그아웃 localhost:8000/auth/logout
-router.get("/logout", isLoggedIn, async (req, res, next) => {
+router.get('/logout', isLoggedIn, async (req, res, next) => {
   // 사용자를 로그아웃 상태로 바꿈
   req.logout((err) => {
     if (err) {
@@ -111,7 +126,7 @@ router.get("/logout", isLoggedIn, async (req, res, next) => {
       console.log(err)
       return res.status(500).json({
         success: false,
-        message: "로그아웃 중 오류가 발생했습니다.",
+        message: '로그아웃 중 오류가 발생했습니다.',
         error: err,
       })
     }
@@ -119,13 +134,13 @@ router.get("/logout", isLoggedIn, async (req, res, next) => {
     //status code를 주지 않으면 기본값은 200
     res.json({
       success: true,
-      message: "로그아웃에 성공했습니다.",
+      message: '로그아웃에 성공했습니다.',
     })
   })
 })
 
 //로그인 상태 확인 localhost:8000/auth/status
-router.get("/status", async (req, res, next) => {
+router.get('/status', async (req, res, next) => {
   if (req.isAuthenticated()) {
     //로그인이 된 상태
     // req.user는 passport의 역직렬화 설정에 의해 로그인되었을때 가져올 수 있다
