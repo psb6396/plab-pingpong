@@ -105,6 +105,7 @@ router.post('/login', isNotLoggedIn, async (req, res, next) => {
 //구글로그인 연동 시작버튼
 router.get(
   '/google',
+  isNotLoggedIn,
   passport.authenticate('google', { scope: ['profile', 'email'] })
 )
 
