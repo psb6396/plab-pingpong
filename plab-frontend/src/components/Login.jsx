@@ -157,15 +157,19 @@ const Login = () => {
     [dispatch, navigate, email, password]
   )
 
-  const googleLogin = useCallback(
-    (e) => {
-      dispatch(googleLoginUserThunk())
-        .unwrap()
-        .then(() => navigate('/'))
-        .catch((error) => console.error('구글 로그인 실패:', error))
-    },
-    [dispatch, navigate]
-  )
+  // const googleLogin = useCallback(
+  //   (e) => {
+  //     dispatch(googleLoginUserThunk())
+  //       .unwrap()
+  //       .then(() => navigate('/'))
+  //       .catch((error) => console.error('구글 로그인 실패:', error))
+  //   },
+  //   [dispatch, navigate]
+  // )
+
+  const googleLogin = () => {
+    window.location.href = 'http://localhost:8000/auth/google'
+  }
 
   return (
     <Container maxWidth='sm' sx={{ marginTop: '80px' }}>

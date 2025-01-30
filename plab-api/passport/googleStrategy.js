@@ -10,7 +10,7 @@ module.exports = () => {
       {
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: '/auth/google/callback',
+        callbackURL: 'auth/google/callback',
       },
       async (accessToken, refreshToken, profile, done) => {
         // Handle user profile here (e.g., save to database)
