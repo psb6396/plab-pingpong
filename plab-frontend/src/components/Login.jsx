@@ -135,7 +135,7 @@ import React, { useCallback, useState } from 'react'
 import Box from '@mui/material/Box'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { loginUserThunk } from '../features/authSlice'
+import { loginUserThunk, googleLoginUserThunk } from '../features/authSlice'
 
 const Login = () => {
   const [email, setEmail] = useState('')
@@ -157,7 +157,15 @@ const Login = () => {
     [dispatch, navigate, email, password]
   )
 
-  
+  const googleLogin = useCallback(
+    (e) => {
+      dispatch(googleLoginUserThunk())
+        .unwrap()
+        .then(() => navigate('/'))
+        .catch((error) => console.error('구글 로그인 실패:', error))
+    },
+    [dispatch, navigate]
+  )
 
   return (
     <Container maxWidth='sm' sx={{ marginTop: '80px' }}>
@@ -217,9 +225,7 @@ const Login = () => {
             </Button>
           </Box>
         </form>
-        <Button onClick={}>
-            구글로 로그인
-        </Button>
+        <Button onClick={googleLogin}>구글로 로그인</Button>
       </Box>
     </Container>
   )

@@ -103,20 +103,19 @@ router.post('/login', isNotLoggedIn, async (req, res, next) => {
 })
 
 //구글로그인 연동 시작버튼
-router.get(
-  '/google',
-  isNotLoggedIn,
-  passport.authenticate('google', { scope: ['profile', 'email'] })
-)
+router.get('/google', passport.authenticate('google', { scope: ['profile'] }))
 
-router.get(
-  '/google/callback',
+router.get('/google/callback', isNotLoggedIn, async (req, res, next) => {
   passport.authenticate('google', { failureRedirect: '/' }),
-  (req, res) => {
-    // Successful authentication, redirect home.
-    res.redirect('/') // 여기도 나중에 손봐줘야할 듯
-  }
-)
+    (authError, user, info) => {
+      // Successful authentication, redirect home.
+      // res.redirect('/') // 여기도 나중에 손봐줘야할 듯
+      res.json({
+        success: true,
+        message: '구글 로그인 성공',
+      })
+    }
+})
 
 //로그아웃 localhost:8000/auth/logout
 router.get('/logout', isLoggedIn, async (req, res, next) => {

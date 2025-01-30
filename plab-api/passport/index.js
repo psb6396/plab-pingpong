@@ -1,6 +1,7 @@
 const passport = require('passport')
 const local = require('./localStrategy')
 const User = require('../models/user')
+const google = require('./googleStrategy')
 
 module.exports = () => {
   //직렬화(serializeUser) : 로그인 성공 후 사용자 정보를 세션에 저장
@@ -21,4 +22,5 @@ module.exports = () => {
   })
 
   local() //localStrategy.js 파일의 함수를 실행해 passport에 local을 추가
+  google()
 }

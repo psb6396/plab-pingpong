@@ -23,6 +23,7 @@ export const loginUser = async (credentials) => {
   }
 }
 
+//구글로 로그인
 export const googleLoginUser = async () => {
   try {
     const response = await plabApi.get('/auth/google')
