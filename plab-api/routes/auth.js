@@ -105,9 +105,9 @@ router.post('/login', isNotLoggedIn, async (req, res, next) => {
 //구글로그인 연동 시작버튼
 router.get('/google', passport.authenticate('google', { scope: ['profile'] }))
 
-router.get('/google/callback', isNotLoggedIn, (req, res, next) => {
-  passport.authenticate('google', { failureRedirect: 'http://localhost:3000' }),
-    (authError, user, info) => {
+router.get('/google/callback', isNotLoggedIn, (req, res) => {
+  passport.authenticate('google', { failureRedirect: '/' }),
+    (req, res) => {
       // Successful authentication, redirect home.
       res.redirect('/') // 여기도 나중에 손봐줘야할 듯
       // res.redirect('http://localhost:3000')

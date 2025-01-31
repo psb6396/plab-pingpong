@@ -1,0 +1,23 @@
+{
+  // IntelliSense를 사용하여 가능한 특성에 대해 알아보세요.
+  // 기존 특성에 대한 설명을 보려면 가리킵니다.
+  // 자세한 내용을 보려면 https://go.microsoft.com/fwlink/?linkid=830387을(를) 방문하세요.
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "프로그램 시작",
+      "skipFiles": ["<node_internals>/**"],
+      "program": "${workspaceFolder}\\plab-api\\app.js",
+      "cwd": "${workspaceFolder}\\plab-api",
+      "env": {
+        "PORT": "8000",
+        "NODE_ENV": "development",
+        "COOKIE_SECRET": "nodebirdsecret",
+        "GOOGLE_CLIENT_ID": "96686080315-b7m5gu9htsjc8ve1f29b5lsv5cejok6p.apps.googleusercontent.com",
+        "GOOGLE_CLIENT_SECRET": "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"
+      }
+    }
+  ]
+}
