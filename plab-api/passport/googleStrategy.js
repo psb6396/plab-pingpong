@@ -10,7 +10,7 @@ module.exports = () => {
       {
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: 'auth/google/callback',
+        callbackURL: '/auth/google/callback',
       },
       async (accessToken, refreshToken, profile, done) => {
         // Handle user profile here (e.g., save to database)
@@ -22,14 +22,14 @@ module.exports = () => {
           })
           // user객체에서 find해서
           // 이미 가입된 구글 프로필이면 성공
-          if (exUser) {
-            done(null, exUser) // 로그인 인증 완료
+          if (exSocialAccount) {
+            done(null, exSocialAccount) // 로그인 인증 완료
           } else {
             // 가입되지 않는 유저면 회원가입 시키고 로그인을 시킨다
             const newUser = await User.create({
               email: profile?.email[0].value,
               nick: profile.displayName,
-              snsId: profile.id,
+              // snsId: profile.id,
               provider: 'google',
             })
             done(null, newUser) // 회원가입하고 로그인 인증 완료
