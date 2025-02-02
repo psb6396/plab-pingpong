@@ -113,13 +113,16 @@ router.get('/google/callback', isNotLoggedIn, (req, res, next) => {
     'google',
     { failureRedirect: '/' },
     (authError, user, info) => {
-      // Successful authentication, redirect home.
-      res.redirect('/') // 여기도 나중에 손봐줘야할 듯
-      // res.redirect('http://localhost:3000')
-      // res.json({
-      //   success: true,
-      //   message: '구글 로그인 성공',
-      // })
+      if (authError) {
+        //로그인 인증 중 에러 발생시
+        return res.status(500).json({
+          success: false,
+          message: '인증 중 오류 발생',
+          error: authError,
+        })
+      }
+      if (!user) {
+      }
     }
   )(req, res, next)
 })

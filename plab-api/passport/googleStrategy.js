@@ -29,15 +29,16 @@ module.exports = () => {
             done(null, exUser) // 로그인 인증 완료
           } else {
             // 가입되지 않는 유저면 SocialAccount와 User를 각각 create 하고 로그인을 시킨다
-            await SocialAccount.create({
+            const tempSocialAccount = {
               snsId: profile.id,
               accountEmail: profile?.emails[0].value,
               accountType: 'GOOGLE',
-            })
-            const newUser = await User.create({
-              //email 부분을 어떻게 해야하려나.......
-            })
-            done(null, newUser) // 회원가입하고 로그인 인증 완료
+            }
+            const tempUser = {
+              email: profile?.emails[0].value,
+            }
+
+            done(null, false, { message: '가입되지 않은 회원입니다.' }) // 회원가입하고 로그인 인증 완료
           }
         } catch (error) {
           console.error(error)
