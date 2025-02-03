@@ -34,6 +34,12 @@ export const googleLoginUser = async () => {
   }
 }
 
+//구글로 회원가입
+export const googleSignup = async () => {
+  try {
+  } catch (error) {}
+}
+
 //로그인 상태확인
 export const checkAuthStatus = async () => {
   try {

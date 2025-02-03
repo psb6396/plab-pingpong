@@ -122,6 +122,7 @@ router.get('/google/callback', isNotLoggedIn, (req, res, next) => {
         })
       }
       if (!user) {
+        req.session.tempThings = info.tempThings
       }
     }
   )(req, res, next)

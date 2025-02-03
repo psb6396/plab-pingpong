@@ -15,6 +15,7 @@ module.exports = () => {
       async (accessToken, refreshToken, profile, done) => {
         // Handle user profile here (e.g., save to database)
         console.log('google profile : ', profile)
+        console.log('엑세스토큰:', accessToken)
         try {
           const exSocialAccount = await SocialAccount.findOne({
             // 구글 플랫폼에서 로그인 했고 & snsId필드에 구글 아이디가 일치할경우
@@ -38,7 +39,10 @@ module.exports = () => {
               email: profile?.emails[0].value,
             }
 
-            done(null, false, { message: '가입되지 않은 회원입니다.' }) // 회원가입하고 로그인 인증 완료
+            done(null, false, {
+              message: '가입되지 않은 회원입니다.',
+              tempThings: { tempSocialAccount, tempUser },
+            }) // 회원가입하고 로그인 인증 완료
           }
         } catch (error) {
           console.error(error)
