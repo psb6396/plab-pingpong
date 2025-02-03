@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt')
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares')
 const User = require('../models/user')
 
-//회원가입 localhost:8000/auth/join
+//일반회원가입 localhost:8000/auth/join
 router.post('/join', isNotLoggedIn, async (req, res, next) => {
   const { email, nick, password, managerChecked } = req.body
   try {
@@ -108,6 +108,7 @@ router.get(
   passport.authenticate('google', { scope: ['profile', 'email'] })
 )
 
+//구글 최종 로그인
 router.get('/google/callback', isNotLoggedIn, (req, res, next) => {
   passport.authenticate(
     'google',
@@ -123,6 +124,7 @@ router.get('/google/callback', isNotLoggedIn, (req, res, next) => {
       }
       if (!user) {
         req.session.tempThings = info.tempThings
+        return res.redirect(info.redirect || '/signup') // Redirect to additional info page
       }
     }
   )(req, res, next)
