@@ -126,6 +126,27 @@ router.get('/google/callback', isNotLoggedIn, (req, res, next) => {
         req.session.tempThings = info.tempThings
         return res.redirect(info.redirect || '/signup') // Redirect to additional info page
       }
+      req.login(user, (loginError) => {
+        if (loginError) {
+          // 로그인 상태로 바꾸는 중 오류 발생시
+          return res.status(500).json({
+            success: false,
+            message: '로그인 중 오류 발생',
+            error: loginError,
+          })
+        }
+
+        //로그인 성공시
+        //status code를 주지 않으면 기본값은 200
+        res.json({
+          success: true,
+          message: '로그인 성공',
+          user: {
+            id: user.id,
+            nick: user.nick,
+          },
+        })
+      })
     }
   )(req, res, next)
 })

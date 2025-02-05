@@ -42,7 +42,7 @@ module.exports = () => {
             done(null, false, {
               message: '가입되지 않은 회원입니다.',
               tempThings: { tempSocialAccount, tempUser },
-              redirect: '/signup',
+              redirect: '',
             }) // 회원가입하고 로그인 인증 완료
           }
         } catch (error) {
